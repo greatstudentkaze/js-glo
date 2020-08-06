@@ -4,3 +4,6 @@ let money,
     deposit,
     mission,
     period;
+
+alert(":D");
+console.log("xD");
