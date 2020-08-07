@@ -1,21 +1,13 @@
-let money = 60000,
-    income = 'инвестиции',
-    addExpenses = 'питание, еда, квартира, проезд, одежда',
-    deposit = true,
-    mission = 40000,
-    period = 4;
+let num = 266219,
+    multiply = 1;
 
-console.log(typeof money);
-console.log(typeof income);
-console.log(typeof deposit);
+while (num > 0) {
+    multiply *= num % 10;
+    num = Math.trunc(num / 10);
+}
 
-console.log(addExpenses.length);
+console.log(multiply);
 
-console.log('Период равен ' + period + ' месяца');
-console.log('Цель - заработать ' + mission + ' рублей');
+let newNum = multiply ** 3;
 
-addExpenses.toLowerCase();
-console.log(addExpenses.split(', '));
-
-let budgetDay = money / 30;
-console.log(budgetDay);
+console.log(String(newNum).slice(0, 2));
