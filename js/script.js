@@ -1,9 +1,6 @@
-let money,
-    income,
-    addExpenses,
-    deposit,
-    mission,
-    period;
-
-alert(":D");
-console.log("xD");
+let money = 60000,
+    income = 'инвестиции',
+    addExpenses = 'питание, еда, квартира, проезд, одежда',
+    deposit = true,
+    mission = 40000,
+    period = 4;
