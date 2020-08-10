@@ -10,7 +10,7 @@ const money = prompt('Ваш месячный доход?', '50000'),
     mission = 40000,
     period = 4,
     missionReach = Math.ceil(mission / budgetMonth),
-    budgetDay = Math.round(money / 30);
+    budgetDay = Math.floor(money / 30);
 
 console.log(typeof money, typeof income, typeof deposit);
 
