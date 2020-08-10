@@ -27,3 +27,20 @@ if (lang === 'ru') {
 } else {
     console.log('Ошибка при вводе');
 }
+
+console.log('\n');
+
+switch (lang) {
+    case 'ru':
+        console.log('Дни недели на русском языке:');
+        daysOfTheWeekRu.forEach(item => console.log('\t' + item));
+        break;
+    case 'en':
+        console.log('Дни недели на английском языке:');
+        daysOfTheWeekEn.forEach(item => console.log('\t' + item));
+        break;
+    default:
+        console.log('Ошибка при вводе');
+}
+
+console.log('\n');
