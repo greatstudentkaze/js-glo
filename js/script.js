@@ -1,3 +1,4 @@
+// 1
 const lang = prompt('Введите язык, на котором нужно вывести дни недели (ru/en):', 'ru'),
     daysOfTheWeekRu = [
         'Понедельник',
@@ -51,3 +52,11 @@ daysOfTheWeek[2] = ['Ошибка при вводе языка'];
 console.log('Дни недели (' + lang + '):');
 daysOfTheWeek[Number(lang === 'en') + Number(lang !== 'ru' && lang !== 'en') * 2]
     .forEach(item => console.log('\t' + item));
+
+console.log('\n');
+
+// 2
+const namePerson = prompt('Введите имя:', 'Иван');
+
+namePerson === 'Артем' ? console.log('директор') : namePerson === 'Максим'
+    ? console.log('преподаватель') : console.log('студент');
