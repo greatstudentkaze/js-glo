@@ -1,33 +1,34 @@
 // 1
 const lang = prompt('Введите язык, на котором нужно вывести дни недели (ru/en):', 'ru'),
-    daysOfTheWeekRu = [
-        'Понедельник',
-        'Вторник',
-        'Среда',
-        'Четверг',
-        'Пятница',
-        'Суббота',
-        'Воскресенье'
-    ],
-    daysOfTheWeekEn = [
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-        'Sunday'
-    ],
-    daysOfTheWeek = [daysOfTheWeekRu, daysOfTheWeekEn];
+    daysOfTheWeek = [
+        [
+            'Понедельник',
+            'Вторник',
+            'Среда',
+            'Четверг',
+            'Пятница',
+            'Суббота',
+            'Воскресенье'
+        ],
+        [
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday',
+            'Sunday'
+        ]
+    ];
 
 if (lang === 'ru') {
     console.log('Дни недели на русском языке:');
-    daysOfTheWeek[0].forEach(item => console.log('\t' + item));
+    console.log(daysOfTheWeek[0]);
 } else if (lang === 'en') {
     console.log('Дни недели на английском языке:');
-    daysOfTheWeek[1].forEach(item => console.log('\t' + item));
+    console.log(daysOfTheWeek[1]);
 } else {
-    console.log('Ошибка при вводе');
+    console.log('Ошибка при вводе языка');
 }
 
 console.log('\n');
@@ -35,23 +36,20 @@ console.log('\n');
 switch (lang) {
     case 'ru':
         console.log('Дни недели на русском языке:');
-        daysOfTheWeek[0].forEach(item => console.log('\t' + item));
+        console.log(daysOfTheWeek[0]);
         break;
     case 'en':
         console.log('Дни недели на английском языке:');
-        daysOfTheWeek[1].forEach(item => console.log('\t' + item));
+        console.log(daysOfTheWeek[1]);
         break;
     default:
-        console.log('Ошибка при вводе');
+        console.log('Ошибка при вводе языка');
 }
 
 console.log('\n');
 
-daysOfTheWeek[2] = ['Ошибка при вводе языка'];
-
 console.log('Дни недели (' + lang + '):');
-daysOfTheWeek[Number(lang === 'en') + Number(lang !== 'ru' && lang !== 'en') * 2]
-    .forEach(item => console.log('\t' + item));
+console.log(daysOfTheWeek[Number(lang === 'en')]);
 
 console.log('\n');
 
