@@ -8,7 +8,8 @@ const money = prompt('Ваш месячный доход?'),
     deposit = confirm('Есть ли у Вас депозит в банке?'),
     mission = 40000,
     period = 4,
-    budgetDay = money / 30;
+    budgetDay = money / 30,
+    budgetMonth = money - (amount1 + amount2);
 
 console.log(typeof money, typeof income, typeof deposit);
 
@@ -20,3 +21,5 @@ console.log('Цель - заработать ' + mission + ' рублей');
 console.log(addExpenses.toLowerCase().split(', '));
 
 console.log(budgetDay);
+
+console.log(budgetMonth);
