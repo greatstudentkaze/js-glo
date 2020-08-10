@@ -46,3 +46,8 @@ switch (lang) {
 
 console.log('\n');
 
+daysOfTheWeek[2] = ['Ошибка при вводе языка'];
+
+console.log('Дни недели (' + lang + '):');
+daysOfTheWeek[Number(lang === 'en') + Number(lang !== 'ru' && lang !== 'en') * 2]
+    .forEach(item => console.log('\t' + item));
