@@ -26,3 +26,13 @@ console.log('Бюджет на месяц: ' + budgetMonth);
 console.log('Цель будет достигнута за: ' + missionReach + ' мес.');
 
 console.log('Бюджет на день: ' + budgetDay);
+
+if (budgetDay > 1200) {
+    console.log('У Вас высокий уровень дохода')
+} else if (budgetDay > 600) {
+    console.log('У Вас средний уровень дохода')
+} else if (budgetDay >= 0) {
+    console.log('К сожалению, у Вас уровень дохода ниже среднего')
+} else {
+    console.log('Что-то пошло не так')
+}
