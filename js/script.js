@@ -16,12 +16,13 @@ console.log(typeof money, typeof income, typeof deposit);
 
 console.log(addExpenses.length);
 
-console.log('Период равен ' + period + ' месяца');
+console.log('Период равен ' + period + ' мес.');
 console.log('Цель - заработать ' + mission + ' рублей');
-console.log('Цель будет достигнута за: ' + missionReach + ' мес.');
 
 console.log(addExpenses.toLowerCase().split(', '));
 
-console.log(budgetDay);
+console.log('Бюджет на месяц: ' + budgetMonth);
 
-console.log(budgetMonth);
+console.log('Цель будет достигнута за: ' + missionReach + ' мес.');
+
+console.log('Бюджет на день: ' + budgetDay);
