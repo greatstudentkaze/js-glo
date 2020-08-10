@@ -17,7 +17,11 @@ const lang = prompt('Введите язык, на котором нужно в�
         'Friday',
         'Saturday',
         'Sunday'
-    ];
+    ],
+    daysOfTheWeek = new Map([
+        ['ru', daysOfTheWeekRu],
+        ['en', daysOfTheWeekEn]
+    ]);
 
 if (lang === 'ru') {
     console.log('Дни недели на русском языке:');
@@ -46,9 +50,8 @@ switch (lang) {
 
 console.log('\n');
 
-
 console.log('Дни недели (' + lang + '):');
-console.log(daysOfTheWeek[Number(lang === 'en')]);
+console.log(daysOfTheWeek.get(lang));
 
 console.log('\n');
 
