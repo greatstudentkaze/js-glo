@@ -14,9 +14,19 @@ const money = +prompt('Ваш месячный доход?', '50000'),
     missionReach = Math.ceil(mission / budgetMonth),
     budgetDay = Math.floor(budgetMonth / 30);
 
-const showTypeOf = function(data) {
+const showTypeOf = function (data) {
     console.log(data, typeof data);
 };
+
+const getExpensesMonth = function () {
+    return amount1 + amount2
+};
+
+const getAccumulatedMonth = function () {
+    return money - getExpensesMonth();
+};
+
+const accumulatedMonth = getAccumulatedMonth();
 
 showTypeOf(money);
 showTypeOf(income);
@@ -35,7 +45,7 @@ console.log('Цель будет достигнута за: ' + missionReach + '
 
 console.log('Бюджет на день: ' + budgetDay);
 
-const getStatusIncome = function() {
+const getStatusIncome = function () {
     if (budgetDay >= 1200) {
         return ('У Вас высокий уровень дохода')
     } else if (budgetDay >= 600) {
