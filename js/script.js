@@ -1,10 +1,12 @@
-const money = prompt('Ваш месячный доход?', '50000'),
+'use strict';
+
+const money = +prompt('Ваш месячный доход?', '50000'),
     income = 'инвестиции',
     addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую:', 'Квартира, Еда'),
     expense1 = prompt('Введите обязательную статью расходов:', 'Квартира').toLowerCase(),
-    amount1 = prompt('Во сколько это обойдется?', '20000'),
+    amount1 = +prompt('Во сколько это обойдется?', '20000'),
     expense2 = prompt('Введите обязательную статью расходов:', 'Еда').toLowerCase(),
-    amount2 = prompt('Во сколько это обойдется?', '10000'),
+    amount2 = +prompt('Во сколько это обойдется?', '10000'),
     deposit = confirm('Нажмите "OK", если у Вас есть депозит в банке'),
     budgetMonth = money - amount1 - amount2,
     mission = 40000,
@@ -12,7 +14,13 @@ const money = prompt('Ваш месячный доход?', '50000'),
     missionReach = Math.ceil(mission / budgetMonth),
     budgetDay = Math.floor(budgetMonth / 30);
 
-console.log(typeof money, typeof income, typeof deposit);
+const showTypeOf = function(data) {
+    console.log(data, typeof data);
+};
+
+showTypeOf(money);
+showTypeOf(income);
+showTypeOf(deposit);
 
 console.log(addExpenses.length);
 
@@ -27,12 +35,16 @@ console.log('Цель будет достигнута за: ' + missionReach + '
 
 console.log('Бюджет на день: ' + budgetDay);
 
-if (budgetDay >= 1200) {
-    console.log('У Вас высокий уровень дохода')
-} else if (budgetDay >= 600) {
-    console.log('У Вас средний уровень дохода')
-} else if (budgetDay >= 0) {
-    console.log('К сожалению, у Вас уровень дохода ниже среднего')
-} else {
-    console.log('Что-то пошло не так')
-}
+const getStatusIncome = function() {
+    if (budgetDay >= 1200) {
+        return ('У Вас высокий уровень дохода')
+    } else if (budgetDay >= 600) {
+        return ('У Вас средний уровень дохода')
+    } else if (budgetDay >= 0) {
+        return ('К сожалению, у Вас уровень дохода ниже среднего')
+    } else {
+        return ('Что-то пошло не так')
+    }
+};
+
+console.log(getStatusIncome());
