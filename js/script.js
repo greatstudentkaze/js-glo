@@ -28,6 +28,10 @@ const getAccumulatedMonth = function () {
 
 const accumulatedMonth = getAccumulatedMonth();
 
+const getTargetMonth = function () {
+    return Math.ceil(mission / accumulatedMonth);
+}
+
 showTypeOf(money);
 showTypeOf(income);
 showTypeOf(deposit);
