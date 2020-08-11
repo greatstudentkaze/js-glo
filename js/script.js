@@ -1,62 +1,25 @@
-// 1
-const lang = prompt('Введите язык, на котором нужно вывести дни недели (ru/en):', 'ru'),
-    daysOfTheWeekRu = [
-        'Понедельник',
-        'Вторник',
-        'Среда',
-        'Четверг',
-        'Пятница',
-        'Суббота',
-        'Воскресенье'
-    ],
-    daysOfTheWeekEn = [
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-        'Sunday'
-    ],
-    daysOfTheWeek = new Map([
-        ['ru', daysOfTheWeekRu],
-        ['en', daysOfTheWeekEn]
-    ]);
+const processString = function (str) {
+    if (typeof str !== "string") {
+        console.log('В качестве аргумента функции передана не строка!');
+        str = String(str);
+    }
 
-if (lang === 'ru') {
-    console.log('Дни недели на русском языке:');
-    console.log(daysOfTheWeekRu);
-} else if (lang === 'en') {
-    console.log('Дни недели на английском языке:');
-    console.log(daysOfTheWeekEn);
-} else {
-    console.log('Ошибка при вводе языка');
-}
+    str = str.trim();
+
+    if (str.length > 30) {
+        str = str.substr(0, 30);
+        str += '...';
+    }
+
+    return str;
+};
+
+console.log(processString('     98    '));
 
 console.log('\n');
 
-switch (lang) {
-    case 'ru':
-        console.log('Дни недели на русском языке:');
-        console.log(daysOfTheWeekRu);
-        break;
-    case 'en':
-        console.log('Дни недели на английском языке:');
-        console.log(daysOfTheWeekEn);
-        break;
-    default:
-        console.log('Ошибка при вводе языка');
-}
+console.log(processString(98));
 
 console.log('\n');
 
-console.log('Дни недели (' + lang + '):');
-console.log(daysOfTheWeek.get(lang));
-
-console.log('\n');
-
-// 2
-const namePerson = prompt('Введите имя:', 'Иван');
-
-namePerson === 'Артем' ? console.log('директор') : namePerson === 'Максим'
-    ? console.log('преподаватель') : console.log('студент');
+console.log(processString('Если строка более 30 знаков - то после 30го символа часть текста скрывается и вместо них появляются три точки (...)'));
