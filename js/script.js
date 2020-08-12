@@ -20,6 +20,7 @@ const
     deposit = confirm('Нажмите "OK", если у Вас есть депозит в банке'),
     accumulatedMonth = getAccumulatedMonth(),
     mission = 40000,
+    targetMonth = getTargetMonth(),
     period = 4,
     budgetDay = Math.floor(accumulatedMonth / 30);
 
@@ -74,7 +75,7 @@ console.log('Сумма обязательных расходов за меся�
 console.log('Возможные расходы: ');
 console.log(addExpenses.toLowerCase().split(', '));
 
-console.log('Цель будет достигнута за: ' + getTargetMonth() + ' мес.');
+console.log(targetMonth > 0 ? 'Цель будет достигнута за: ' + targetMonth + ' мес.' : 'Цель не будет достигнута');
 
 console.log('Бюджет на день: ' + budgetDay);
 
