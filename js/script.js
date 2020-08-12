@@ -1,17 +1,29 @@
 'use strict';
 
-const money = +prompt('Ваш месячный доход?', '50000'),
+const isNumber = function (n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+};
+
+let money;
+
+(function () {
+    do {
+        money = prompt('Ваш месячный доход?', '50000');
+    } while (!isNumber(money))
+}())
+
+const
     income = 'инвестиции',
     addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую:', 'Квартира, Еда'),
-    expense1 = prompt('Введите обязательную статью расходов:', 'Квартира').toLowerCase(),
-    amount1 = +prompt('Во сколько это обойдется?', '20000'),
-    expense2 = prompt('Введите обязательную статью расходов:', 'Еда').toLowerCase(),
-    amount2 = +prompt('Во сколько это обойдется?', '10000'),
+    expenses = [],
+    expensesAmount = getExpensesMonth(),
     deposit = confirm('Нажмите "OK", если у Вас есть депозит в банке'),
     accumulatedMonth = getAccumulatedMonth(),
     mission = 40000,
     period = 4,
     budgetDay = Math.floor(accumulatedMonth / 30);
+
+
 
 const showTypeOf = function (data) {
     console.log(data, typeof data);
@@ -30,11 +42,23 @@ const getStatusIncome = function () {
 };
 
 function getExpensesMonth() {
-    return amount1 + amount2;
+    let sum = 0;
+
+    for (let i = 0; i < 2; i++) {
+        let expenseAmount;
+
+        expenses[i] = prompt('Введите обязательную статью расходов:', 'Квартира').toLowerCase();
+        do {
+            expenseAmount = prompt('Во сколько это обойдется?', '10000');
+        } while (!isNumber(expenseAmount))
+        sum += +expenseAmount;
+    }
+
+    return sum;
 }
 
 function getAccumulatedMonth() {
-    return money - getExpensesMonth();
+    return money - expensesAmount;
 }
 
 function getTargetMonth() {
@@ -45,7 +69,7 @@ showTypeOf(money);
 showTypeOf(income);
 showTypeOf(deposit);
 
-console.log('Сумма обязательных расходов за месяц: ' + getExpensesMonth());
+console.log('Сумма обязательных расходов за месяц: ' + expensesAmount);
 
 console.log('Возможные расходы: ');
 console.log(addExpenses.toLowerCase().split(', '));
