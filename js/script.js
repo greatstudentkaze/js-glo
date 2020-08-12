@@ -1,7 +1,7 @@
 const processString = function (str) {
     if (typeof str !== "string") {
         console.log('В качестве аргумента функции передана не строка!');
-        str = String(str);
+        return
     }
 
     str = str.trim();
@@ -14,7 +14,7 @@ const processString = function (str) {
     return str;
 };
 
-console.log(processString('     98    '));
+console.log(processString('     9tyeight    '));
 
 console.log('\n');
 
