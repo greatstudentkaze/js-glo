@@ -4,13 +4,15 @@ const isNumber = function (n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
-let money;
-
-(function () {
+function start() {
     do {
         money = prompt('Ваш месячный доход?', '50000');
     } while (!isNumber(money))
-}())
+}
+
+let money;
+
+start();
 
 const
     income = 'инвестиции',
@@ -23,8 +25,6 @@ const
     targetMonth = getTargetMonth(),
     period = 4,
     budgetDay = Math.floor(accumulatedMonth / 30);
-
-
 
 const showTypeOf = function (data) {
     console.log(data, typeof data);
