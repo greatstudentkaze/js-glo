@@ -1,8 +1,9 @@
-const num = 266219,
-    numDigits = String(num).split('').map(item => Number(item)),
-    product = numDigits.reduce((total, digit) => total * digit),
-    result = String(product ** 3).slice(0, 2);
+const isNumber = (n) => {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+};
 
-console.log(product);
-
-console.log(result);
+const getRandomInt = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+};
