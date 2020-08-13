@@ -1,17 +1,20 @@
 // 1
 const arr = ['543', '3240', '403', '943', '230', '1235', '4004'];
 
-arr.forEach(item => {
-    if (item[0] === '4' || item[0] === '2') console.log(item);
-});
+arr.filter(item => item[0] === '4' || item[0] === '2').forEach(item => console.log(item));
 
 console.log('\n');
 
 // 2
-console.log('Все простые числа от 1 до 100:');
-for (let i = 1; i < 101; i++) {
-    if (isPrimeNumber(i)) console.log(`${i} (делители: ${1} и ${i})`)
+const numbers = [];
+
+for (let i = 0; i < 100; i++) {
+    numbers[i] = i + 1;
 }
+
+console.log('Все простые числа от 1 до 100:');
+const primeNumbers = numbers.filter(item => isPrimeNumber(item));
+primeNumbers.forEach(item => console.log(`\t${item} (делители: ${1} и ${item})`));
 
 function isPrimeNumber(n) {
     if (n === 1) return false;
