@@ -12,6 +12,7 @@ function getRandomInt(min, max) {
 
 function guessTheNumber(min, max) {
     const conceivedNumber = getRandomInt(min, max);
+    let numberOfAttempts = 10;
 
     // dev
     console.log('Загаданное число: ', conceivedNumber);
@@ -20,15 +21,16 @@ function guessTheNumber(min, max) {
         const attempt = prompt('Угадай число от 1 до 100:');
 
         if (+attempt !== conceivedNumber) {
+            numberOfAttempts--;
             if (attempt === null) {
                 alert('Спасибо за участие!');
                 return true;
             } else if (!isNumber(attempt)) {
-                alert('Введи число!');
+                alert('Введи число! Осталось ' + numberOfAttempts + ' попыток');
             } else if (attempt > conceivedNumber) {
-                alert('Загаданное число меньше!');
+                alert('Загаданное число меньше! Осталось ' + numberOfAttempts + ' попыток');
             } else if (attempt < conceivedNumber) {
-                alert('Загаданное число больше!');
+                alert('Загаданное число больше! Осталось ' + numberOfAttempts + ' попыток');
             }
 
             getAttempt();
