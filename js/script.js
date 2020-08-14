@@ -29,20 +29,32 @@ const appData = {
         const addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую:', 'Квартира, Еда');
 
         appData.addExpenses = addExpenses.toLowerCase().split(', ');
+
+        for (let i = 0; i < 2; i++) {
+            const key = prompt('Введите обязательную статью расходов:', 'Квартира').toLowerCase();
+            let value;
+
+            do {
+                value = prompt('Во сколько это обойдется?', '10000');
+            } while (!isNumber(value));
+
+            appData.expenses[key] = +value;
+        }
+
         appData.deposit = confirm('Нажмите "OK", если у Вас есть депозит в банке');
     },
     getExpensesMonth: function () {
         let sum = 0;
 
-        for (let i = 0; i < 2; i++) {
-            let expenseAmount;
-
-            expenses[i] = prompt('Введите обязательную статью расходов:', 'Квартира').toLowerCase();
-            do {
-                expenseAmount = prompt('Во сколько это обойдется?', '10000');
-            } while (!isNumber(expenseAmount))
-            sum += +expenseAmount;
-        }
+        // for (let i = 0; i < 2; i++) {
+        //     let expenseAmount;
+        //
+        //     expenses[i] = prompt('Введите обязательную статью расходов:', 'Квартира').toLowerCase();
+        //     do {
+        //         expenseAmount = prompt('Во сколько это обойдется?', '10000');
+        //     } while (!isNumber(expenseAmount))
+        //     sum += +expenseAmount;
+        // }
 
         return sum;
     },
