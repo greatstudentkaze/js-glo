@@ -46,15 +46,9 @@ const appData = {
     getExpensesMonth: function () {
         let sum = 0;
 
-        // for (let i = 0; i < 2; i++) {
-        //     let expenseAmount;
-        //
-        //     expenses[i] = prompt('Введите обязательную статью расходов:', 'Квартира').toLowerCase();
-        //     do {
-        //         expenseAmount = prompt('Во сколько это обойдется?', '10000');
-        //     } while (!isNumber(expenseAmount))
-        //     sum += +expenseAmount;
-        // }
+        for (let expense in appData.expenses) {
+            sum += appData.expenses[expense];
+        }
 
         return sum;
     },
