@@ -79,3 +79,10 @@ console.log('Сумма обязательных расходов за меся�
 console.log(appData.targetMonth > 0 ? 'Цель будет достигнута за: ' + appData.targetMonth + ' мес.' : 'Цель не будет достигнута');
 
 console.log(appData.getStatusIncome());
+
+console.log('\n');
+
+console.log('Наша программа включает в себя данные:');
+for (let data in appData) {
+    console.log(data, ': ', appData[data]);
+}
