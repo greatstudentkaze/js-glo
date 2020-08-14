@@ -1,88 +1,28 @@
-'use strict';
+document.body.insertAdjacentHTML('afterbegin', '<ul class="week"></ul>');
 
-const isNumber = function (n) {
-    return !isNaN(parseFloat(n)) && isFinite(n);
-};
+const week = [
+  'Понедельник',
+  'Вторник',
+  'Среда',
+  'Четверг',
+  'Пятница',
+  'Суббота',
+  'Воскресенье',
+],
+    weekList = document.querySelector('.week');
 
-function start() {
-    do {
-        money = prompt('Ваш месячный доход?', '50000');
-    } while (!isNumber(money))
-}
+week.forEach((item, i) => {
+    const date = new Date();
 
-let money;
-start();
-
-const appData = {
-    budget: money,
-    budgetMonth: 0,
-    budgetDay: 0,
-    income: {},
-    addIncome: [],
-    expenses: {},
-    expensesMonth: 0,
-    addExpenses: [],
-    deposit: false,
-    mission: 40000,
-    targetMonth: 0,
-    period: 4,
-    asking: function () {
-        const addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую:', 'Квартира, Еда');
-
-        appData.addExpenses = addExpenses.toLowerCase().split(', ');
-
-        for (let i = 0; i < 2; i++) {
-            const key = prompt('Введите обязательную статью расходов:', 'Квартира').toLowerCase();
-            let value;
-
-            do {
-                value = prompt('Во сколько это обойдется?', '10000');
-            } while (!isNumber(value));
-
-            appData.expenses[key] = +value;
-        }
-
-        appData.deposit = confirm('Нажмите "OK", если у Вас есть депозит в банке');
-    },
-    getExpensesMonth: function () {
-        for (let expense in appData.expenses) {
-            appData.expensesMonth += appData.expenses[expense];
-        }
-    },
-    getBudget: function () {
-        appData.budgetMonth = appData.budget - appData.expensesMonth;
-        appData.budgetDay = Math.floor(appData.budgetMonth / 30);
-    },
-    getTargetMonth: function () {
-        appData.targetMonth = Math.ceil(appData.mission / appData.budgetMonth);
-    },
-    getStatusIncome: function () {
-        if (appData.budgetDay >= 1200) {
-            return ('У Вас высокий уровень дохода!');
-        } else if (appData.budgetDay >= 600) {
-            return ('У Вас средний уровень дохода.');
-        } else if (appData.budgetDay >= 0) {
-            return ('К сожалению, у Вас уровень дохода ниже среднего :(');
-        } else {
-            return ('Что-то пошло не так О_о');
-        }
+    if (i === 5 || i === 6) {
+        item = `<i>${item}</i>`;
     }
-}
 
-appData.asking();
-appData.getExpensesMonth();
-appData.getBudget();
-appData.getTargetMonth();
+    // i + 1, т.к. метод getDay() возвращает номер дня недели начиная с воскресенья
+    if (i + 1 === date.getDay()) {
+        item = `<b>${item}</b>`;
+    }
 
-console.log('Сумма обязательных расходов за месяц: ' + appData.expensesMonth);
+    weekList.insertAdjacentHTML('beforeend', `<li class="week__day">${item}</li>`);
+});
 
-console.log(appData.targetMonth > 0 ? 'Цель будет достигнута за: ' + appData.targetMonth + ' мес.' : 'Цель не будет достигнута');
-
-console.log(appData.getStatusIncome());
-
-console.log('\n');
-
-console.log('Наша программа включает в себя данные:');
-for (let data in appData) {
-    console.log(data, ': ', appData[data]);
-}
