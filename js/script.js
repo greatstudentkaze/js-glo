@@ -65,6 +65,8 @@ const appData = {
     }
 }
 
+appData.asking();
+
 const expenses = [],
     expensesMonth = appData.getExpensesMonth(),
     accumulatedMonth = appData.getAccumulatedMonth(),
@@ -75,6 +77,7 @@ const expenses = [],
 console.log('Сумма обязательных расходов за месяц: ' + expensesMonth);
 
 console.log('Возможные расходы: ');
+console.log(appData.addExpenses);
 
 console.log(targetMonth > 0 ? 'Цель будет достигнута за: ' + targetMonth + ' мес.' : 'Цель не будет достигнута');
 
