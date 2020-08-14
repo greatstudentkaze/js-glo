@@ -38,10 +38,6 @@ const
     targetMonth = getTargetMonth(),
     budgetDay = Math.floor(accumulatedMonth / 30);
 
-const showTypeOf = function (data) {
-    console.log(data, typeof data);
-};
-
 const getStatusIncome = function () {
     if (budgetDay >= 1200) {
         return ('У Вас высокий уровень дохода!');
@@ -77,10 +73,6 @@ function getAccumulatedMonth() {
 function getTargetMonth() {
     return Math.ceil(appData.mission / accumulatedMonth);
 }
-
-showTypeOf(money);
-showTypeOf(appData.income);
-showTypeOf(appData.deposit);
 
 console.log('Сумма обязательных расходов за месяц: ' + expensesAmount);
 
