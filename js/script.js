@@ -24,6 +24,7 @@ const appData = {
     addExpenses: [],
     deposit: false,
     mission: 40000,
+    targetMonth: 0,
     period: 4,
     asking: function () {
         const addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую:', 'Квартира, Еда');
@@ -53,7 +54,7 @@ const appData = {
         appData.budgetDay = Math.floor(appData.budgetMonth / 30);
     },
     getTargetMonth: function () {
-        return Math.ceil(appData.mission / appData.budgetMonth);
+        appData.targetMonth = Math.ceil(appData.mission / appData.budgetMonth);
     },
     getStatusIncome: function () {
         if (appData.budgetDay >= 1200) {
@@ -71,19 +72,10 @@ const appData = {
 appData.asking();
 appData.getExpensesMonth();
 appData.getBudget();
-
-const targetMonth = appData.getTargetMonth();
-
-
-
+appData.getTargetMonth();
 
 console.log('Сумма обязательных расходов за месяц: ' + appData.expensesMonth);
 
-console.log('Возможные расходы: ');
-console.log(appData.addExpenses);
-
-console.log(targetMonth > 0 ? 'Цель будет достигнута за: ' + targetMonth + ' мес.' : 'Цель не будет достигнута');
-
-console.log('Бюджет на день: ' + appData.budgetDay);
+console.log(appData.targetMonth > 0 ? 'Цель будет достигнута за: ' + appData.targetMonth + ' мес.' : 'Цель не будет достигнута');
 
 console.log(appData.getStatusIncome());
