@@ -8,7 +8,7 @@ const week = [
   'Пятница',
   'Суббота',
   'Воскресенье',
-],
+  ],
     weekList = document.querySelector('.week');
 
 week.forEach((item, i) => {
