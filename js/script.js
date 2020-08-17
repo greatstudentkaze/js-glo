@@ -4,6 +4,10 @@ const isNumber = function (n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
+const arrayCapitalize = function (array) {
+    return array.map(item => item[0].toUpperCase() + item.slice(1)).join(', ');
+};
+
 function start() {
     do {
         money = prompt('Ваш месячный доход?', '50000');
@@ -115,7 +119,9 @@ console.log(appData.getStatusIncome());
 
 console.log('\n');
 
-// console.log('Наша программа включает в себя данные:');
-// for (let data in appData) {
-//     console.log(data, ': ', appData[data]);
-// }
+console.log('Наша программа включает в себя данные:');
+for (let data in appData) {
+    console.log(data, ': ', appData[data]);
+}
+
+console.log(arrayCapitalize(appData.addExpenses));
