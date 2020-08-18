@@ -1,7 +1,5 @@
 'use strict';
 
-const date = new Date();
-
 const declensionTime = (hour, min, sec) => {
   if (hour % 10 === 1 && Math.floor(hour / 10) !== 1) {
     hour += ' час';
@@ -35,29 +33,51 @@ const addZero = (number) => {
   else return number;
 };
 
-let dateA = date.toLocaleString('ru', {
-  weekday: 'long',
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-});
-dateA = 'Сегодня ' + dateA[0].toUpperCase() + dateA.slice(1);
-dateA = dateA.replace('г.', 'года');
+const getDatetimeA = () => {
+  const date = new Date();
 
-const timeA = declensionTime(date.getHours(), date.getMinutes(), date.getSeconds()),
-  datetimeA = dateA + ', ' + timeA;
-
-const dateB = date.toLocaleString('ru', {
+  let dateA = date.toLocaleString('ru', {
+    weekday: 'long',
     year: 'numeric',
-    month: 'numeric',
-    day: 'numeric'
-  }),
-  timeB = new Date().toLocaleString('ru', {
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric'
-  }),
-  datetimeB = dateB + ' - ' + timeB;
+    month: 'long',
+    day: 'numeric',
+  });
+  dateA = 'Сегодня ' + dateA[0].toUpperCase() + dateA.slice(1);
+  dateA = dateA.replace('г.', 'года');
 
-document.body.insertAdjacentHTML('afterbegin', '<p>б) ' + datetimeB + '</p>');
-document.body.insertAdjacentHTML('afterbegin', '<p>а) ' + datetimeA + '</p>');
+  const timeA = declensionTime(date.getHours(), date.getMinutes(), date.getSeconds());
+
+  return dateA + ', ' + timeA;
+};
+
+const getDatetimeB = () => {
+  const date = new Date();
+
+  const dateB = date.toLocaleString('ru', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric'
+    }),
+    timeB = new Date().toLocaleString('ru', {
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric'
+    });
+
+    return dateB + ' - ' + timeB;
+};
+
+document.body.insertAdjacentHTML('afterbegin', '<p class="datetime datetime--b">б) ' + getDatetimeB() + '</p>');
+document.body.insertAdjacentHTML('afterbegin', '<p class="datetime datetime--a">а) ' + getDatetimeA() + '</p>');
+
+const datetimeAItem = document.querySelector('.datetime--a'),
+  datetimeBItem = document.querySelector('.datetime--b');
+
+const datetimeOutput = () => {
+  setInterval(() => {
+    datetimeAItem.textContent = getDatetimeA();
+    datetimeBItem.textContent = getDatetimeB();
+  }, 1000);
+};
+
+datetimeOutput();
