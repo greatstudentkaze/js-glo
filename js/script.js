@@ -19,7 +19,6 @@ week.forEach((item) => {
 
     if (item === 'Суббота' || item === 'Воскресенье') {
       weekItem.style.fontStyle = 'italic';
-      console.log(item)
     }
 
     if (item.toLowerCase() === russianDay) {
