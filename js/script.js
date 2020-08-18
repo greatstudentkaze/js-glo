@@ -4,7 +4,7 @@ const isNumber = function (n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
-const arrayCapitalize = function (array) {
+const arrayCapitalizeString = function (array) {
     return array.map(item => item[0].toUpperCase() + item.slice(1)).join(', ');
 };
 
@@ -39,16 +39,19 @@ const appData = {
                 cashIncome;
 
             do {
-                itemIncome = prompt('Какой у Вас дополнительный заработок?', 'Инвестиции').toLowerCase();
-            } while (itemIncome === '' || !isNaN(parseFloat(itemIncome)));
+                itemIncome = prompt('Какой у Вас дополнительный заработок?', 'Инвестиции');
+            } while (!isNaN(parseFloat(itemIncome)) || !itemIncome);
             do {
                 cashIncome = prompt('Сколько в месяц Вы зарабатываете на этом?', '10000');
             } while (!isNumber(cashIncome));
 
-            appData.income[itemIncome] = +cashIncome;
+            appData.income[itemIncome.toLowerCase()] = +cashIncome;
         }
 
-        const addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую:', 'Квартира, Еда');
+        let addExpenses;
+        do {
+            addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую:', 'Квартира, Еда');
+        } while (!isNaN(parseFloat(addExpenses)) || !addExpenses);
 
         appData.addExpenses = addExpenses.toLowerCase().split(', ');
 
@@ -57,13 +60,13 @@ const appData = {
                 cashExpense;
 
             do {
-                itemExpense = prompt('Введите обязательную статью расходов:', 'Квартира').toLowerCase();
-            } while (itemExpense === '' || !isNaN(parseFloat(itemExpense)))
+                itemExpense = prompt('Введите обязательную статью расходов:', 'Квартира');
+            } while (!isNaN(parseFloat(itemExpense)) || !itemExpense)
             do {
                 cashExpense = prompt('Во сколько это обойдется?', '10000');
             } while (!isNumber(cashExpense));
 
-            appData.expenses[itemExpense] = +cashExpense;
+            appData.expenses[itemExpense.toLowerCase()] = +cashExpense;
         }
 
         appData.deposit = confirm('Нажмите "OK", если у Вас есть депозит в банке');
@@ -124,4 +127,4 @@ for (let data in appData) {
     console.log(data, ': ', appData[data]);
 }
 
-console.log(arrayCapitalize(appData.addExpenses));
+console.log(arrayCapitalizeString(appData.addExpenses));
