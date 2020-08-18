@@ -9,20 +9,24 @@ const week = [
   'Суббота',
   'Воскресенье',
   ],
-    weekList = document.querySelector('.week');
+  weekList = document.querySelector('.week'),
+  russianDay = new Date().toLocaleString('ru', {weekday: 'long'});
 
-week.forEach((item, i) => {
-    const date = new Date();
 
-    if (i === 5 || i === 6) {
-        item = `<i>${item}</i>`;
+week.forEach((item) => {
+  const weekItem = document.createElement('li');
+  weekItem.classList.add('week__day');
+
+    if (item === 'Суббота' || item === 'Воскресенье') {
+      weekItem.style.fontStyle = 'italic';
+      console.log(item)
     }
 
-    // i + 1, т.к. метод getDay() возвращает номер дня недели начиная с воскресенья
-    if (i + 1 === date.getDay()) {
-        item = `<b>${item}</b>`;
+    if (item.toLowerCase() === russianDay) {
+      weekItem.style.fontWeight = 'bold';
     }
 
-    weekList.insertAdjacentHTML('beforeend', `<li class="week__day">${item}</li>`);
+    weekItem.textContent = item;
+    weekList.appendChild(weekItem);
 });
 
