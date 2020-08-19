@@ -4,7 +4,8 @@ const booksWrapper = document.querySelector('.books'),
   books = booksWrapper.querySelectorAll('.book'),
   adWrapper = document.querySelector('.adv'),
   book2Content = books[0].querySelectorAll('li'),
-  book5Content = books[5].querySelectorAll('li');
+  book5Content = books[5].querySelectorAll('li'),
+  book6Content = books[2].querySelectorAll('li');
 
 booksWrapper.prepend(books[1]);
 booksWrapper.append(books[2]);
@@ -24,3 +25,7 @@ book2Content[9].after(book2Content[2]);
 book5Content[2].before(book5Content[9]);
 book5Content[6].before(book5Content[2]);
 book5Content[8].before(book5Content[5]);
+
+const book6Chapter8 = document.createElement('li');
+book6Chapter8.textContent = 'Глава 8: За пределами ES6';
+book6Content[8].after(book6Chapter8);
