@@ -6,3 +6,5 @@ const booksWrapper = document.querySelector('.books'),
 booksWrapper.prepend(books[1]);
 booksWrapper.append(books[2]);
 books[3].before(books[4]);
+
+document.body.classList.add('background-image');
