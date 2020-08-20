@@ -169,9 +169,7 @@ const appData = {
 calculateBtn.disabled = true;
 budgetInput.addEventListener('input', () => calculateBtn.disabled = budgetInput.value === '');
 titleInputs.forEach(item => {
-  item.addEventListener('input', (evt) => {
-    item.value = item.value.replace(/[^а-яё, ]/gi, '');
-  });
+  item.addEventListener('input', () => item.value = item.value.replace(/[^а-яё, ]/gi, ''));
 });
 amountInputs.forEach(item => {
   item.addEventListener('keydown', evt => {
