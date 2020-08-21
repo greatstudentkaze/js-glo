@@ -62,6 +62,10 @@ const appData = {
     const cloneIncomeItem = incomeItems[0].cloneNode(true);
     cloneIncomeItem.querySelector('.income-title').value = '';
     cloneIncomeItem.querySelector('.income-amount').value = '';
+    cloneIncomeItem.querySelector('.income-title').addEventListener('input', evt => evt.target.value = evt.target.value.replace(/[^а-яё, ]/gi, ''));
+    cloneIncomeItem.querySelector('.income-amount').addEventListener('keydown', evt => {
+      if (evt.key < '0' || evt.key > '9') evt.preventDefault();
+    });
 
     incomeAddBtn.before(cloneIncomeItem);
     incomeItems = document.querySelectorAll('.income-items');
@@ -85,6 +89,10 @@ const appData = {
     const cloneExpensesItem = expensesItems[0].cloneNode(true);
     cloneExpensesItem.querySelector('.expenses-title').value = '';
     cloneExpensesItem.querySelector('.expenses-amount').value = '';
+    cloneExpensesItem.querySelector('.expenses-title').addEventListener('input', evt => evt.target.value = evt.target.value.replace(/[^а-яё, ]/gi, ''));
+    cloneExpensesItem.querySelector('.expenses-amount').addEventListener('keydown', evt => {
+      if (evt.key < '0' || evt.key > '9') evt.preventDefault();
+    });
 
     expenseAddBtn.before(cloneExpensesItem);
     expensesItems = document.querySelectorAll('.expenses-items');
