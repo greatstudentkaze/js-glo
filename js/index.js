@@ -63,9 +63,7 @@ const appData = {
     cloneIncomeItem.querySelector('.income-title').value = '';
     cloneIncomeItem.querySelector('.income-amount').value = '';
     cloneIncomeItem.querySelector('.income-title').addEventListener('input', evt => evt.target.value = evt.target.value.replace(/[^а-яё, ]/gi, ''));
-    cloneIncomeItem.querySelector('.income-amount').addEventListener('keydown', evt => {
-      if (evt.key < '0' || evt.key > '9') evt.preventDefault();
-    });
+    cloneIncomeItem.querySelector('.income-amount').addEventListener('input', evt => evt.target.value = evt.target.value.replace(/[^0-9.]/, ''));
 
     incomeAddBtn.before(cloneIncomeItem);
     incomeItems = document.querySelectorAll('.income-items');
@@ -90,9 +88,7 @@ const appData = {
     cloneExpensesItem.querySelector('.expenses-title').value = '';
     cloneExpensesItem.querySelector('.expenses-amount').value = '';
     cloneExpensesItem.querySelector('.expenses-title').addEventListener('input', evt => evt.target.value = evt.target.value.replace(/[^а-яё, ]/gi, ''));
-    cloneExpensesItem.querySelector('.expenses-amount').addEventListener('keydown', evt => {
-      if (evt.key < '0' || evt.key > '9') evt.preventDefault();
-    });
+    cloneExpensesItem.querySelector('.expenses-amount').addEventListener('input', evt => evt.target.value = evt.target.value.replace(/[^0-9.]/, ''));
 
     expenseAddBtn.before(cloneExpensesItem);
     expensesItems = document.querySelectorAll('.expenses-items');
@@ -180,9 +176,7 @@ titleInputs.forEach(item => {
   item.addEventListener('input', () => item.value = item.value.replace(/[^а-яё, ]/gi, ''));
 });
 amountInputs.forEach(item => {
-  item.addEventListener('keydown', evt => {
-    if (evt.key < '0' || evt.key > '9') evt.preventDefault();
-  });
+  item.addEventListener('input', () => item.value = item.value.replace(/[^0-9.]/, ''));
 });
 
 calculateBtn.addEventListener('click', appData.start);
