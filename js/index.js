@@ -1,6 +1,8 @@
 'use strict';
 
-const calculateBtn = document.getElementById('start'),
+const dataInputBlock = document.querySelector('.data'),
+  calculateBtn = document.getElementById('start'),
+  resetBtn = document.getElementById('cancel'),
   incomeAddBtn = document.getElementsByTagName('button')[0],
   expenseAddBtn = document.getElementsByTagName('button')[1],
   depositCheck = document.getElementById('deposit-check'),
@@ -24,8 +26,6 @@ const calculateBtn = document.getElementById('start'),
 
 let incomeItems = document.querySelectorAll('.income-items'),
   expensesItems = document.querySelectorAll('.expenses-items');
-
-'use strict';
 
 const isNumber = function (n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
@@ -57,6 +57,35 @@ const appData = {
     this.getAddIncome();
     this.getAddExpenses();
     this.showResult();
+
+    dataInputBlock.querySelectorAll('input[type="text"]')
+      .forEach(item => item.disabled = true);
+
+    incomeAddBtn.disabled = true;
+    expenseAddBtn.disabled = true;
+    depositCheck.disabled = true;
+
+    calculateBtn.style.display = 'none';
+    resetBtn.style.display = 'inline-block';
+  },
+  reset: function () {
+    dataInputBlock.querySelectorAll('input[type="text"]')
+      .forEach(item => {
+        item.value = '';
+        item.disabled = false;
+      });
+    periodInput.value = '1';
+    periodAmount.textContent = '1';
+
+    incomeAddBtn.disabled = false;
+    expenseAddBtn.disabled = false;
+    depositCheck.disabled = false;
+
+    document.querySelectorAll('.result-total')
+      .forEach(item => item.value = '');
+    calculateBtn.style.display = '';
+    resetBtn.style.display = '';
+
   },
   addIncomeBlock: function () {
     const cloneIncomeItem = incomeItems[0].cloneNode(true);
@@ -186,6 +215,7 @@ amountInputs.forEach(item => {
 });
 
 calculateBtn.addEventListener('click', appData.start.bind(appData));
+resetBtn.addEventListener('click', appData.reset.bind(appData));
 incomeAddBtn.addEventListener('click', appData.addIncomeBlock);
 expenseAddBtn.addEventListener('click', appData.addExpensesBlock);
 periodInput.addEventListener('input', appData.watchPeriodInput);
