@@ -209,9 +209,7 @@ titleInputs.forEach(item => {
   item.addEventListener('input', () => item.value = item.value.replace(/[^а-яё, ]/gi, ''));
 });
 amountInputs.forEach(item => {
-  item.addEventListener('keydown', evt => {
-    if (evt.key < '0' || evt.key > '9') evt.preventDefault();
-  });
+  item.addEventListener('input', () => item.value = item.value.replace(/[^0-9.]/, ''));
 });
 
 calculateBtn.addEventListener('click', appData.start.bind(appData));
