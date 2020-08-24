@@ -69,21 +69,45 @@ const appData = {
     resetBtn.style.display = 'inline-block';
   },
   reset: function () {
+    this.budget = 0;
+    this.budgetMonth = 0;
+    this.budgetDay = 0;
+    this.income = {};
+    this.incomeMonth = 0;
+    this.addIncome = [];
+    this.expenses = {};
+    this.expensesMonth = 0;
+    this.addExpenses = [];
+    this.deposit = false;
+    this.mission = 40000;
+
     dataInputBlock.querySelectorAll('input[type="text"]')
       .forEach(item => {
         item.value = '';
         item.disabled = false;
       });
+
+    for (let i = incomeItems.length-1; i > 0; i--) {
+      incomeItems[i].remove();
+    }
+    incomeAddBtn.style.display = '';
+    for (let i = expensesItems.length-1; i > 0; i--) {
+      expensesItems[i].remove();
+    }
+    expenseAddBtn.style.display = '';
+
     periodInput.value = '1';
     periodAmount.textContent = '1';
 
     incomeAddBtn.disabled = false;
     expenseAddBtn.disabled = false;
     depositCheck.disabled = false;
+    depositCheck.checked = false;
 
     document.querySelectorAll('.result-total')
       .forEach(item => item.value = '');
     calculateBtn.style.display = '';
+    calculateBtn.disabled = true;
     resetBtn.style.display = '';
 
   },
@@ -92,9 +116,7 @@ const appData = {
     cloneIncomeItem.querySelector('.income-title').value = '';
     cloneIncomeItem.querySelector('.income-amount').value = '';
     cloneIncomeItem.querySelector('.income-title').addEventListener('input', evt => evt.target.value = evt.target.value.replace(/[^а-яё, ]/gi, ''));
-    cloneIncomeItem.querySelector('.income-amount').addEventListener('keydown', evt => {
-      if (evt.key < '0' || evt.key > '9') evt.preventDefault();
-    });
+    cloneIncomeItem.querySelector('.income-amount').addEventListener('input', evt => evt.target.value = evt.target.value.replace(/[^0-9.]/, ''));
 
     incomeAddBtn.before(cloneIncomeItem);
     incomeItems = document.querySelectorAll('.income-items');
@@ -119,8 +141,10 @@ const appData = {
     cloneExpensesItem.querySelector('.expenses-title').value = '';
     cloneExpensesItem.querySelector('.expenses-amount').value = '';
     cloneExpensesItem.querySelector('.expenses-title').addEventListener('input', evt => evt.target.value = evt.target.value.replace(/[^а-яё, ]/gi, ''));
-    cloneExpensesItem.querySelector('.expenses-amount').addEventListener('keydown', evt => {
-      if (evt.key < '0' || evt.key > '9') evt.preventDefault();
+    cloneExpensesItem.querySelector('.expenses-amount').addEventListener('input', evt => evt.target.value = evt.target.value.replace(/[^0-9.]/, ''));
+
+    amountInputs.forEach(item => {
+      item.addEventListener('input', () => item.value = item.value.replace(/[^0-9.]/, ''));
     });
 
     expenseAddBtn.before(cloneExpensesItem);
