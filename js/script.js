@@ -1,7 +1,10 @@
+'use strict';
+
 function DomElement(selector, styles) {
   this.selector = selector;
 
   styles = styles || {};
+  this.position = styles.position;
   this.width = styles.width;
   this.height = styles.height;
   this.bg = styles.bg;
@@ -26,7 +29,8 @@ DomElement.prototype.create = function () {
       element.textContent = 'div';
   }
 
-  element.style.cssText = `width: ${this.width};
+  element.style.cssText = `position: ${this.position};
+                     width: ${this.width};
                      height: ${this.height};
                      background: ${this.bg};
                      font-size: ${this.fontSize};`;
@@ -34,20 +38,43 @@ DomElement.prototype.create = function () {
   document.body.append(element);
 }
 
-const paragraph = new DomElement('#paragraph', {
-  width: '300px',
-  height: '150px',
-  bg: '#f2f2f2',
-  fontSize: '32px'
-});
-
-paragraph.create();
-
 const square = new DomElement('.square', {
+  position: 'absolute',
   width: '400px',
   height: '400px',
   bg: '#cccccc',
   fontSize: '64px'
 });
 
-square.create();
+document.addEventListener('DOMContentLoaded', () => {
+  square.create();
+  const squareElem = document.querySelector(`.${square.selector.slice(1)}`);
+
+  squareElem.style.top = '0px';
+  squareElem.style.left = '0px';
+
+  document.addEventListener('keydown', evt => {
+    let top = +squareElem.style.top.replace('px', ''),
+      left = +squareElem.style.left.replace('px', '');
+
+    switch (evt.key) {
+      case 'ArrowUp':
+        top -= 10;
+        squareElem.style.top = top + 'px';
+        break;
+      case 'ArrowRight':
+        left += 10;
+        squareElem.style.left = left + 'px';
+        break;
+      case 'ArrowDown':
+        top += 10;
+        squareElem.style.top = top + 'px';
+        break;
+      case 'ArrowLeft':
+        left -= 10;
+        squareElem.style.left = left + 'px';
+        break;
+    }
+  });
+});
+
