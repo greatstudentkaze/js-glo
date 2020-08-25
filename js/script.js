@@ -1,29 +1,53 @@
-function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+function DomElement(selector, styles) {
+  this.selector = selector;
+
+  styles = styles || {};
+  this.width = styles.width;
+  this.height = styles.height;
+  this.bg = styles.bg;
+  this.fontSize = styles.fontSize;
 }
 
-function getRandomColor() {
-  let color = getRandomIntInclusive(0x000000, 0xffffff).toString(16);
-
-  if (color.length < 6) {
-    for (let i = 0; i < 6 - color.length; i++) {
-      color = '0' + color;
-    }
+DomElement.prototype.create = function () {
+  let element;
+  switch (this.selector[0]) {
+    case '.':
+      element = document.createElement('div');
+      element.classList.add(this.selector.slice(1));
+      element.textContent = 'div' + this.selector;
+      break;
+    case '#':
+      element = document.createElement('p');
+      element.id = this.selector.slice(1);
+      element.textContent = 'p' + this.selector;
+      break;
+    default:
+      element = document.createElement('div');
+      element.textContent = 'div';
   }
 
-  return color;
+  element.style.cssText = `width: ${this.width};
+                     height: ${this.height};
+                     background: ${this.bg};
+                     font-size: ${this.fontSize};`;
+
+  document.body.append(element);
 }
 
-const color = document.querySelector('.color'),
-  changeColorBtn = document.querySelector('.color-change');
-
-changeColorBtn.addEventListener('click', () => {
-  const newColor = getRandomColor();
-
-  document.body.style.backgroundColor = `#${newColor}`;
-  color.textContent = `#${newColor}`;
-  color.style.color = `#${newColor}`;
-  changeColorBtn.style.color = `#${newColor}`;
+const paragraph = new DomElement('#paragraph', {
+  width: '300px',
+  height: '150px',
+  bg: '#f2f2f2',
+  fontSize: '32px'
 });
+
+paragraph.create();
+
+const square = new DomElement('.square', {
+  width: '400px',
+  height: '400px',
+  bg: '#cccccc',
+  fontSize: '64px'
+});
+
+square.create();
