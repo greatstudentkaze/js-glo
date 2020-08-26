@@ -245,22 +245,26 @@ AppData.prototype.watchPeriodInput = function () {
   periodAmount.textContent = periodInput.value;
 };
 
+AppData.prototype.addEventListeners = function () {
+  calculateBtn.disabled = true;
+  budgetInput.addEventListener('input', () => calculateBtn.disabled = budgetInput.value === '');
+  titleInputs.forEach(item => {
+    item.addEventListener('input', () => item.value = item.value.replace(/[^а-яё, ]/gi, ''));
+  });
+  amountInputs.forEach(item => {
+    item.addEventListener('input', () => item.value = item.value.replace(/[^0-9.]/, ''));
+  });
+
+  calculateBtn.addEventListener('click', this.start.bind(this));
+  resetBtn.addEventListener('click', this.reset.bind(this));
+  incomeAddBtn.addEventListener('click', this.addIncomeBlock);
+  expenseAddBtn.addEventListener('click', this.addExpensesBlock);
+  periodInput.addEventListener('input', this.watchPeriodInput);
+}
+
 const appData = new AppData();
 
-calculateBtn.disabled = true;
-budgetInput.addEventListener('input', () => calculateBtn.disabled = budgetInput.value === '');
-titleInputs.forEach(item => {
-  item.addEventListener('input', () => item.value = item.value.replace(/[^а-яё, ]/gi, ''));
-});
-amountInputs.forEach(item => {
-  item.addEventListener('input', () => item.value = item.value.replace(/[^0-9.]/, ''));
-});
-
-calculateBtn.addEventListener('click', appData.start.bind(appData));
-resetBtn.addEventListener('click', appData.reset.bind(appData));
-incomeAddBtn.addEventListener('click', appData.addIncomeBlock);
-expenseAddBtn.addEventListener('click', appData.addExpensesBlock);
-periodInput.addEventListener('input', appData.watchPeriodInput);
+appData.addEventListeners();
 
 // console.log(appData.targetMonth > 0 ? 'Цель будет достигнута за: ' + appData.targetMonth + ' мес.' : 'Цель не будет достигнута');
 
