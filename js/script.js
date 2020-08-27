@@ -28,10 +28,7 @@ const declensionTime = (hour, min, sec) => {
   return hour + ' ' + min + ' ' + sec;
 };
 
-const addZero = (number) => {
-  if (Math.floor(number / 10) === 0) return Number('0' + number);
-  else return number;
-};
+const addZero = number => number.toString().length === 1 ? `0${number}` : number;
 
 const getDatetimeA = () => {
   const date = new Date();
