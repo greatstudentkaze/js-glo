@@ -1,31 +1,15 @@
 'use strict';
 
-const declensionTime = (hour, min, sec) => {
-  if (hour % 10 === 1 && Math.floor(hour / 10) !== 1) {
-    hour += ' час';
-  } else if (hour % 10 >= 2 && hour % 10 <= 4 && Math.floor(hour / 10) !== 1) {
-    hour += ' часа';
+const declensionTime = (n, words) => {
+  if (n % 10 === 1 && Math.floor(n / 10) !== 1) {
+    n += ` ${words[0]}`;
+  } else if (n % 10 >= 2 && n % 10 <= 4 && Math.floor(n / 10) !== 1) {
+    n += ` ${words[1]}`;
   } else {
-    hour += ' часов';
+    n += ` ${words[2]}`;
   }
 
-  if (min % 10 === 1 && Math.floor(min / 10) !== 1) {
-    min += ' минута';
-  } else if (min % 10 >= 2 && min % 10 <= 4 && Math.floor(min / 10) !== 1) {
-    min += ' минуты';
-  } else {
-    min += ' минут';
-  }
-
-  if (sec % 10 === 1 && Math.floor(sec / 10) !== 1) {
-    sec += ' секунда';
-  } else if (sec % 10 >= 2 && sec % 10 <= 4 && Math.floor(sec / 10) !== 1) {
-    sec += ' секунды';
-  } else {
-    sec += ' секунд';
-  }
-
-  return hour + ' ' + min + ' ' + sec;
+  return n;
 };
 
 const addZero = number => number.toString().length === 1 ? `0${number}` : number;
@@ -33,47 +17,52 @@ const addZero = number => number.toString().length === 1 ? `0${number}` : number
 const getDatetimeA = () => {
   const date = new Date();
 
-  let dateA = date.toLocaleString('ru', {
+  const dateA = date.toLocaleString('ru', {
     weekday: 'long',
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   });
-  dateA = 'Сегодня ' + dateA[0].toUpperCase() + dateA.slice(1);
-  dateA = dateA.replace('г.', 'года');
 
-  const timeA = declensionTime(date.getHours(), date.getMinutes(), date.getSeconds());
+  const formattedDateA = 'Сегодня ' + dateA[0].toUpperCase() + dateA.slice(1).replace('г.', 'года');
 
-  return dateA + ', ' + timeA;
+  const timeAh = declensionTime(date.getHours(), ['час', 'часа', 'часов']),
+    timeAm = declensionTime(date.getMinutes(), ['минута', 'минуты', 'минут']),
+    timeAs = declensionTime(date.getSeconds(), ['секунда', 'секунды', 'секунд']);
+
+  return formattedDateA + ', ' + timeAh + ' ' + timeAm + ' ' + timeAs;
 };
 
 const getDatetimeB = () => {
   const date = new Date();
 
-  const dateB = date.toLocaleString('ru', {
+  const datetimeB = date.toLocaleString('ru', {
       year: 'numeric',
       month: 'numeric',
-      day: 'numeric'
-    }),
-    timeB = new Date().toLocaleString('ru', {
+      day: 'numeric',
       hour: 'numeric',
       minute: 'numeric',
       second: 'numeric'
     });
 
-    return dateB + ' - ' + timeB;
+    return datetimeB.replace(', ', ' - ');
 };
 
-document.body.insertAdjacentHTML('afterbegin', '<p class="datetime datetime--b">б) ' + getDatetimeB() + '</p>');
-document.body.insertAdjacentHTML('afterbegin', '<p class="datetime datetime--a">а) ' + getDatetimeA() + '</p>');
+const datetimeAItem = document.createElement('p'),
+  datetimeBItem = document.createElement('p');
 
-const datetimeAItem = document.querySelector('.datetime--a'),
-  datetimeBItem = document.querySelector('.datetime--b');
+datetimeAItem.classList.add('datetime', 'datetime--a');
+datetimeAItem.textContent = 'а) ' + getDatetimeA();
+document.body.append(datetimeAItem);
+
+datetimeBItem.classList.add('datetime', 'datetime--b');
+datetimeBItem.textContent = 'б) ' + getDatetimeB();
+document.body.append(datetimeBItem);
 
 const datetimeOutput = () => {
   setInterval(() => {
-    datetimeAItem.textContent = getDatetimeA();
-    datetimeBItem.textContent = getDatetimeB();
+    datetimeAItem.textContent = 'а) ' + getDatetimeA();
+    datetimeBItem.textContent = 'б) ' + getDatetimeB();
   }, 1000);
 };
 
