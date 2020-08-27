@@ -109,29 +109,23 @@ class AppData {
     resetBtn.style.display = '';
   }
 
-  addIncomeExpensesBlock(evt) {
-    const type = evt.target.classList[1].split('_')[0];
-
-    let cloneItem;
-    if (type === 'income') {
-      cloneItem = incomeItems[0].cloneNode(true);
-    } else if (type === 'expenses') {
-      cloneItem = expensesItems[0].cloneNode(true);
-    }
+  addIncomeExpensesBlock(evt, items) {
+    const type = evt.target.classList[1].split('_')[0],
+      cloneItem = items[0].cloneNode(true);
 
     cloneItem.querySelector(`.${type}-title`).value = '';
     cloneItem.querySelector(`.${type}-amount`).value = '';
     cloneItem.querySelector(`.${type}-title`).addEventListener('input', evt => evt.target.value = evt.target.value.replace(/[^а-яё, ]/gi, ''));
     cloneItem.querySelector(`.${type}-amount`).addEventListener('input', evt => evt.target.value = evt.target.value.replace(/[^0-9.]/, ''));
 
+    evt.target.before(cloneItem);
+    items = document.querySelectorAll(`.${type}-items`);
+    if (items.length >= 3) evt.target.style.display = 'none';
+
     if (type === 'income') {
-      incomeAddBtn.before(cloneItem);
-      incomeItems = document.querySelectorAll('.income-items');
-      if (incomeItems.length >= 3) incomeAddBtn.style.display = 'none';
+      incomeItems = items;
     } else if (type === 'expenses') {
-      expenseAddBtn.before(cloneItem);
-      expensesItems = document.querySelectorAll('.expenses-items');
-      if (expensesItems.length >= 3) expenseAddBtn.style.display = 'none';
+      expensesItems = items;
     }
   }
 
@@ -237,8 +231,8 @@ class AppData {
 
     calculateBtn.addEventListener('click', this.start.bind(this));
     resetBtn.addEventListener('click', this.reset.bind(this));
-    incomeAddBtn.addEventListener('click', this.addIncomeExpensesBlock);
-    expenseAddBtn.addEventListener('click', this.addIncomeExpensesBlock);
+    incomeAddBtn.addEventListener('click', evt => this.addIncomeExpensesBlock(evt, incomeItems));
+    expenseAddBtn.addEventListener('click', evt => this.addIncomeExpensesBlock(evt, expensesItems));
     periodInput.addEventListener('input', this.watchPeriodInput);
   }
 }
