@@ -5,6 +5,8 @@ const dataInputBlock = document.querySelector('.data'),
   resetBtn = document.getElementById('cancel'),
   incomeAddBtn = document.getElementsByTagName('button')[0],
   expenseAddBtn = document.getElementsByTagName('button')[1],
+  incomeItems = document.getElementsByClassName('income-items'),
+  expensesItems = document.getElementsByClassName('expenses-items'),
   depositCheck = document.getElementById('deposit-check'),
   addIncomeInput = document.querySelectorAll('.additional_income-item'),
   budgetMonthInput = document.querySelector('.budget_month-value'),
@@ -23,9 +25,6 @@ const dataInputBlock = document.querySelector('.data'),
   periodAmount = document.querySelector('.period-amount'),
   titleInputs = document.querySelectorAll('[placeholder="Наименование"]'),
   amountInputs = document.querySelectorAll('[placeholder="Сумма"]');
-
-let incomeItems = document.querySelectorAll('.income-items'),
-  expensesItems = document.querySelectorAll('.expenses-items');
 
 const isNumber = n => !isNaN(parseFloat(n)) && isFinite(n);
 
@@ -119,14 +118,7 @@ class AppData {
     cloneItem.querySelector(`.${type}-amount`).addEventListener('input', evt => evt.target.value = evt.target.value.replace(/[^0-9.]/, ''));
 
     evt.target.before(cloneItem);
-    items = document.querySelectorAll(`.${type}-items`);
     if (items.length >= 3) evt.target.style.display = 'none';
-
-    if (type === 'income') {
-      incomeItems = items;
-    } else if (type === 'expenses') {
-      expensesItems = items;
-    }
   }
 
   getIncomeExpenses() {
@@ -140,12 +132,12 @@ class AppData {
       }
     };
 
-    incomeItems.forEach(count);
+    [...incomeItems].forEach(count);
     for (let income in this.income) {
       this.incomeMonth += this.income[income];
     }
 
-    expensesItems.forEach(count);
+    [...expensesItems].forEach(count);
   }
 
   getAddIncomeExpenses() {
