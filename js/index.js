@@ -29,7 +29,7 @@ const dataInputBlock = document.querySelector('.data'),
 
 const isNumber = n => !isNaN(parseFloat(n)) && isFinite(n);
 
-const arrayCapitalizeString = array => array.map(item => item[0].toUpperCase() + item.slice(1)).join(', ');
+const arrayCapitalizeString = array => array.map(item => item[0].toUpperCase() + item.slice(1).toLowerCase()).join(', ');
 
 class AppData {
   constructor() {
