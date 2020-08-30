@@ -64,17 +64,7 @@ const deleteCookie = name => {
 
 class AppData {
   constructor() {
-    this.budget = 0;
-    this.budgetMonth = 0;
-    this.budgetDay = 0;
-    this.income = {};
-    this.incomeMonth = 0;
-    this.addIncome = [];
-    this.expenses = {};
-    this.expensesMonth = 0;
-    this.addExpenses = [];
-    this.deposit = false;
-    this.mission = 0;
+    this.setDefaultValues();
   }
 
   start() {
@@ -87,16 +77,7 @@ class AppData {
     this.getAddIncomeExpenses();
     this.showResult();
 
-    dataInputBlock.querySelectorAll('input[type="text"]')
-      .forEach(item => item.disabled = true);
-
-    incomeAddBtn.disabled = true;
-    expenseAddBtn.disabled = true;
-    depositCheck.disabled = true;
-    depositBank.disabled = true;
-
-    calculateBtn.style.display = 'none';
-    resetBtn.style.display = 'inline-block';
+    this.blockInterface();
 
     this.saveData();
   }
@@ -104,19 +85,7 @@ class AppData {
   reset() {
     this.deleteData();
 
-    this.budget = 0;
-    this.budgetMonth = 0;
-    this.budgetDay = 0;
-    this.income = {};
-    this.incomeMonth = 0;
-    this.addIncome = [];
-    this.expenses = {};
-    this.expensesMonth = 0;
-    this.addExpenses = [];
-    this.deposit = false;
-    this.mission = 0;
-    this.depositAmount = 0;
-    this.depositPercent = 0;
+    this.setDefaultValues();
 
     dataInputBlock.querySelectorAll('input[type="text"]')
       .forEach(item => {
@@ -151,6 +120,35 @@ class AppData {
     calculateBtn.style.display = '';
     calculateBtn.disabled = true;
     resetBtn.style.display = '';
+  }
+
+  setDefaultValues() {
+    this.budget = 0;
+    this.budgetMonth = 0;
+    this.budgetDay = 0;
+    this.income = {};
+    this.incomeMonth = 0;
+    this.addIncome = [];
+    this.expenses = {};
+    this.expensesMonth = 0;
+    this.addExpenses = [];
+    this.deposit = false;
+    this.mission = 0;
+    this.depositAmount = 0;
+    this.depositPercent = 0;
+  }
+
+  blockInterface() {
+    dataInputBlock.querySelectorAll('input[type="text"]')
+      .forEach(item => item.disabled = true);
+
+    incomeAddBtn.disabled = true;
+    expenseAddBtn.disabled = true;
+    depositCheck.disabled = true;
+    depositBank.disabled = true;
+
+    calculateBtn.style.display = 'none';
+    resetBtn.style.display = 'inline-block';
   }
 
   addIncomeExpensesBlock(evt, items) {
@@ -357,16 +355,7 @@ class AppData {
     periodInput.value = localStorage.getItem('periodInput');
     periodAmount.textContent = periodInput.value;
 
-    dataInputBlock.querySelectorAll('input[type="text"]')
-      .forEach(item => item.disabled = true);
-
-    incomeAddBtn.disabled = true;
-    expenseAddBtn.disabled = true;
-    depositCheck.disabled = true;
-    depositBank.disabled = true;
-
-    calculateBtn.style.display = 'none';
-    resetBtn.style.display = 'inline-block';
+    this.blockInterface();
   }
 
   deleteData() {
