@@ -314,6 +314,7 @@ class AppData {
     localStorage.setItem('addExpenses', addExpensesOutput.value);
     localStorage.setItem('incomePeriod', incomePeriodOutput.value);
     localStorage.setItem('targetMonth', targetMonthOutput.value);
+    localStorage.setItem('periodInput', periodInput.value);
 
     setCookie('isLoad', true,{'max-age': 2592e6});
     setCookie('budgetMonth', budgetMonthInput.value,{'max-age': 2592e6});
@@ -323,6 +324,7 @@ class AppData {
     setCookie('addExpenses', addExpensesOutput.value,{'max-age': 2592e6});
     setCookie('incomePeriod', incomePeriodOutput.value,{'max-age': 2592e6});
     setCookie('targetMonth', targetMonthOutput.value,{'max-age': 2592e6});
+    setCookie('periodInput', periodInput.value,{'max-age': 2592e6});
   }
 
   compareData() {
@@ -332,22 +334,28 @@ class AppData {
     const localStorageKeys = Object.keys(localStorage);
     const comparisonResult2 = localStorageKeys.every(item => localStorage.getItem(item) === getCookie(item));
 
-    return comparisonResult1 && comparisonResult2;
+    if (!comparisonResult1 || !comparisonResult2) this.deleteData();
   }
 
   getData() {
     budgetMonthInput.value = localStorage.getItem('budgetMonth');
     budgetDayInput.value = localStorage.getItem('budgetDay');
     expensesMonthOutput.value = localStorage.getItem('expensesMonth');
-    addIncomeOutput.value = '' || localStorage.getItem('addIncome');
-    addExpensesOutput.value = '' || localStorage.getItem('addExpenses');
+    addIncomeOutput.value = localStorage.getItem('addIncome');
+    addExpensesOutput.value = localStorage.getItem('addExpenses');
     incomePeriodOutput.value = localStorage.getItem('incomePeriod');
     periodInput.addEventListener('input', () => {
       incomePeriodOutput.value = budgetMonthInput.value * periodInput.value;
       localStorage.setItem('incomePeriod', incomePeriodOutput.value);
       setCookie('incomePeriod', incomePeriodOutput.value,{'max-age': 2592e6});
+
+      localStorage.setItem('periodInput', periodInput.value);
+      setCookie('periodInput', periodInput.value,{'max-age': 2592e6});
     });
     targetMonthOutput.value = localStorage.getItem('targetMonth');
+
+    periodInput.value = localStorage.getItem('periodInput');
+    periodAmount.textContent = periodInput.value;
 
     dataInputBlock.querySelectorAll('input[type="text"]')
       .forEach(item => item.disabled = true);
@@ -371,7 +379,8 @@ class AppData {
 
 const appData = new AppData();
 
-if (localStorage.getItem('isLoad') && appData.compareData()) appData.getData();
+appData.compareData();
+if (localStorage.getItem('isLoad')) appData.getData();
 
 appData.addEventListeners();
 
