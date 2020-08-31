@@ -59,6 +59,9 @@ class AppData {
     dataInputBlock.querySelectorAll('input[type="text"]')
       .forEach(item => item.disabled = true);
 
+    depositAmount.removeEventListener('change', this.checkAmount);
+    depositPercent.removeEventListener('change', this.checkPercent);
+
     incomeAddBtn.disabled = true;
     expenseAddBtn.disabled = true;
     depositCheck.disabled = true;
@@ -216,21 +219,29 @@ class AppData {
   }
 
   changePercent() {
+    calculateBtn.disabled = true;
+
     const selectValue = this.value;
     if (selectValue === 'other') {
       depositPercent.style.display = 'inline-block';
       depositPercent.value = '';
-      depositPercent.addEventListener('change', () => {
-        const percent = depositPercent.value;
-        if (!isNumber(percent) || !(percent >= 0 && percent <= 100)) {
-          alert('Введите корректное значение в поле "Процент"!');
-          calculateBtn.disabled = true;
-        } else if (budgetInput.value) calculateBtn.disabled = false;
-      });
     } else {
       depositPercent.value = selectValue;
       depositPercent.style.display = '';
+      if (depositAmount.value && selectValue) calculateBtn.disabled = false;
     }
+  }
+
+  checkAmount() {
+    calculateBtn.disabled = !(this.value && budgetInput.value && depositPercent.value);
+  }
+
+  checkPercent() {
+    const percent = depositPercent.value;
+    if (!isNumber(percent) || !(percent >= 0 && percent <= 100)) {
+      alert('Введите корректное значение в поле "Процент"!');
+      calculateBtn.disabled = true;
+    } else if (budgetInput.value && depositAmount.value) calculateBtn.disabled = false;
   }
 
   depositHandler() {
@@ -239,6 +250,9 @@ class AppData {
        depositAmount.style.display = 'inline-block';
        this.deposit = true;
        depositBank.addEventListener('change', this.changePercent);
+       depositAmount.addEventListener('change', this.checkAmount);
+       depositPercent.addEventListener('change', this.checkPercent);
+       calculateBtn.disabled = true;
      } else {
        depositBank.style.display = '';
        depositAmount.style.display = '';
@@ -246,6 +260,9 @@ class AppData {
        depositAmount.value = '';
        this.deposit = false;
        depositBank.removeEventListener('change', this.changePercent);
+       depositAmount.removeEventListener('change', this.checkAmount);
+       depositPercent.removeEventListener('change', this.checkPercent);
+       if (budgetInput.value) calculateBtn.disabled = false;
      }
   }
 
@@ -265,7 +282,6 @@ class AppData {
     expenseAddBtn.addEventListener('click', evt => this.addIncomeExpensesBlock(evt, expensesItems));
     periodInput.addEventListener('input', this.watchPeriodInput);
     depositCheck.addEventListener('change', this.depositHandler.bind(this));
-
   }
 }
 
