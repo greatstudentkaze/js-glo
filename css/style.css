@@ -48,6 +48,7 @@ h1 {
 }
 
 .title {
+    display: block;
     color: #353a43;
     font-size: 18px;
     font-weight: 700;
@@ -371,7 +372,7 @@ h1 {
     outline: 0;
     border-bottom: 1px solid #ff7f63;
     color: #ff7f63;
-    font-family: Roboto;
+    font-family: Roboto, Arial, sans-serif;
     font-size: 14px;
     font-weight: 700;
     background-color: transparent
@@ -434,7 +435,7 @@ h1 {
     background-color: #353a43;
     color: #fff;
     font-size: 20px;
-    font-family: Roboto;
+    font-family: Roboto, Arial, sans-serif;
     font-weight: 700;
     line-height: 24px;
     cursor: pointer;
