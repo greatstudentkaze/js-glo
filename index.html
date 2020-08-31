@@ -3,20 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+          content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="preload" href="./font/Roboto-Bold.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="./css/style.min.css">
+    <link rel="stylesheet" href="./css/style.css">
     <title>Калькулятор личного бюджета</title>
 </head>
 <body>
-    <h1>Калькулятор личного бюджета</h1>
     <section class="main">
+        <h1>Калькулятор личного бюджета</h1>
         <div class="calc">
             <div class="data">
                 <div class="salary">
-                    <div class="salary-title title">Месячный доход*</div>
-                    <input type="text" class="salary-amount" placeholder="Сумма">
+                    <label class="salary-title title">
+                        Месячный доход*
+                        <input type="text" class="salary-amount" placeholder="Сумма">
+                    </label>
                 </div>
 
                 <div class="income">
@@ -44,8 +46,10 @@
                 </div>
 
                 <div class="additional_expenses">
-                    <div class="additional_expenses-title title">Возможные расходы <span>(перечислите через запятую)</span></div>
-                    <input type="text" class="additional_expenses-item" placeholder="название">
+                    <label class="additional_expenses-title title">
+                        Возможные расходы <span>(перечислите через запятую)</span>
+                        <input type="text" class="additional_expenses-item" placeholder="название">
+                    </label>
                 </div>
 
                 <div class="deposit">
@@ -74,46 +78,48 @@
                 </div>
 
                 <div class="period">
-                    <div class="title period-title">Период расчета</div>
-                    <input class="period-select" type="range" step="1" min="1" max="12" value="1">
-                    <div class="title period-amount">1</div>
+                    <label class="title period-title">
+                        Период расчета
+                        <input class="period-select" type="range" step="1" min="1" max="12" value="1">
+                    </label>
+                    <span class="title period-amount">1</span>
                 </div>
             </div>
 
             <div class="result">
                 <div class="result-budget_month">
-                    <span class="title">Доход за месяц</span>
-                    <input type="text" class="result-total budget_month-value" placeholder="0" disabled>
+                    <label class="title" for="budget-month">Доход за месяц</label>
+                    <input id="budget-month" type="text" class="result-total budget_month-value" placeholder="0" disabled>
                 </div>
                 <div class="result-budget_day">
-                    <span class="title">Дневной бюджет</span>
-                    <input type="text" class="result-total budget_day-value" placeholder="0" disabled>
+                    <label class="title" for="budget-day">Дневной бюджет</label>
+                    <input id="budget-day" type="text" class="result-total budget_day-value" placeholder="0" disabled>
                 </div>
 
                 <div class="result-expenses_month">
-                    <span class="title">Расход за месяц</span>
-                    <input type="text" class="result-total expenses_month-value" placeholder="0" disabled>
+                    <label class="title" for="expenses-month">Расход за месяц</label>
+                    <input id="expenses-month" type="text" class="result-total expenses_month-value" placeholder="0" disabled>
                 </div>
                 <div class="result-additional_income">
-                    <span class="title">Возможные доходы</span>
-                    <input type="text" class="result-total additional_income-value" placeholder="Наименования" disabled>
+                    <label class="title" for="additional-incomes">Возможные доходы</label>
+                    <input id="additional-incomes" type="text" class="result-total additional_income-value" placeholder="Наименования" disabled>
                 </div>
                 <div class="result-additional_expenses">
-                    <span class="title">Возможные расходы</span>
-                    <input type="text" class="result-total additional_expenses-value" placeholder="Наименования" disabled>
+                    <label class="title" for="additional-expenses">Возможные расходы</label>
+                    <input id="additional-expenses" type="text" class="result-total additional_expenses-value" placeholder="Наименования" disabled>
                 </div>
 
                 <div class="result-income_period">
-                    <span class="title">Накопления за период</span>
-                    <input type="text" class="result-total income_period-value" placeholder="0" disabled>
+                    <label class="title" for="income-period">Накопления за период</label>
+                    <input id="income-period" type="text" class="result-total income_period-value" placeholder="0" disabled>
                 </div>
                 <div class="result-target_month">
-                    <span class="title">Срок достижения цели в месяцах</span>
-                    <input type="text" class="result-total target_month-value" placeholder="Срок" disabled>
+                    <label class="title" for="target-month">Срок достижения цели в месяцах</label>
+                    <input id="target-month" type="text" class="result-total target_month-value" placeholder="Срок" disabled>
                 </div>
                 <div class="control">
-                    <button id="start">Рассчитать</button>
-                    <button id="cancel">Сбросить</button>
+                    <button id="start" type="button">Рассчитать</button>
+                    <button id="cancel" type="button">Сбросить</button>
                 </div>
             </div>
         </div>
