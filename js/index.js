@@ -59,8 +59,8 @@ class AppData {
     dataInputBlock.querySelectorAll('input[type="text"]')
       .forEach(item => item.disabled = true);
 
-    depositAmount.removeEventListener('change', this.checkAmount);
-    depositPercent.removeEventListener('change', this.checkPercent);
+    depositAmount.removeEventListener('input', this.checkAmount);
+    depositPercent.removeEventListener('input', this.checkPercent);
 
     incomeAddBtn.disabled = true;
     expenseAddBtn.disabled = true;
@@ -227,7 +227,7 @@ class AppData {
       depositPercent.value = '';
     } else {
       depositPercent.value = selectValue;
-      depositPercent.style.display = '';
+      depositPercent.style.cssText = '';
       if (budgetInput.value && depositAmount.value && selectValue) calculateBtn.disabled = false;
     }
   }
@@ -239,9 +239,12 @@ class AppData {
   checkPercent() {
     const percent = depositPercent.value;
     if (!isNumber(percent) || !(percent >= 0 && percent <= 100)) {
-      alert('Введите корректное значение в поле "Процент"!');
+      depositPercent.style.color = 'rgba(0, 0, 0, 0.3)';
       calculateBtn.disabled = true;
-    } else if (budgetInput.value && depositAmount.value) calculateBtn.disabled = false;
+    } else {
+      depositPercent.style.color = '';
+      if (budgetInput.value && depositAmount.value) calculateBtn.disabled = false;
+    }
   }
 
   depositHandler() {
@@ -250,33 +253,36 @@ class AppData {
        depositAmount.style.display = 'inline-block';
        this.deposit = true;
        depositBank.addEventListener('change', this.changePercent);
-       depositAmount.addEventListener('change', this.checkAmount);
-       depositPercent.addEventListener('change', this.checkPercent);
+       depositAmount.addEventListener('input', this.checkAmount);
+       depositPercent.addEventListener('input', this.checkPercent);
        calculateBtn.disabled = true;
      } else {
        depositBank.style.display = '';
        depositAmount.style.display = '';
+       depositPercent.style.cssText = '';
        depositBank.value = '';
        depositAmount.value = '';
+       depositPercent.value = '';
        this.deposit = false;
        depositBank.removeEventListener('change', this.changePercent);
-       depositAmount.removeEventListener('change', this.checkAmount);
-       depositPercent.removeEventListener('change', this.checkPercent);
+       depositAmount.removeEventListener('input', this.checkAmount);
+       depositPercent.removeEventListener('input', this.checkPercent);
        if (budgetInput.value) calculateBtn.disabled = false;
      }
   }
 
   addEventListeners() {
-    calculateBtn.disabled = true;
-    budgetInput.addEventListener('change', () => {
-      calculateBtn.disabled = budgetInput.value === '';
-      if (this.deposit) calculateBtn.disabled = !depositBank.value || !depositAmount.value || !depositPercent.value;
-    });
     titleInputs.forEach(item => {
       item.addEventListener('input', () => item.value = item.value.replace(/[^а-яё, ]/gi, ''));
     });
     amountInputs.forEach(item => {
-      item.addEventListener('input', () => item.value = item.value.replace(/[^0-9.]/, ''));
+      item.addEventListener('input', () => item.value = item.value.replace(/[^0-9]/, ''));
+    });
+
+    calculateBtn.disabled = true;
+    budgetInput.addEventListener('input', () => {
+      calculateBtn.disabled = budgetInput.value === '';
+      if (this.deposit) calculateBtn.disabled = !depositBank.value || !depositAmount.value || !depositPercent.value;
     });
 
     calculateBtn.addEventListener('click', this.start.bind(this));
