@@ -233,7 +233,7 @@ class AppData {
   }
 
   checkAmount() {
-    calculateBtn.disabled = !(this.value && budgetInput.value && depositPercent.value);
+    calculateBtn.disabled = !(this.value && budgetInput.value && (isNumber(depositPercent.value) && (depositPercent.value >= 0 && depositPercent.value <= 100)));
   }
 
   checkPercent() {
@@ -268,7 +268,7 @@ class AppData {
 
   addEventListeners() {
     calculateBtn.disabled = true;
-    budgetInput.addEventListener('input', () => calculateBtn.disabled = budgetInput.value === '');
+    budgetInput.addEventListener('change', () => calculateBtn.disabled = budgetInput.value === '');
     titleInputs.forEach(item => {
       item.addEventListener('input', () => item.value = item.value.replace(/[^а-яё, ]/gi, ''));
     });
@@ -290,6 +290,3 @@ const appData = new AppData();
 appData.addEventListeners();
 
 // console.log(appData.targetMonth > 0 ? 'Цель будет достигнута за: ' + appData.targetMonth + ' мес.' : 'Цель не будет достигнута');
-
-
-
