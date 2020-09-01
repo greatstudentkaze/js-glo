@@ -228,7 +228,7 @@ class AppData {
     } else {
       depositPercent.value = selectValue;
       depositPercent.style.display = '';
-      if (depositAmount.value && selectValue) calculateBtn.disabled = false;
+      if (budgetInput.value && depositAmount.value && selectValue) calculateBtn.disabled = false;
     }
   }
 
@@ -268,7 +268,10 @@ class AppData {
 
   addEventListeners() {
     calculateBtn.disabled = true;
-    budgetInput.addEventListener('change', () => calculateBtn.disabled = budgetInput.value === '');
+    budgetInput.addEventListener('change', () => {
+      calculateBtn.disabled = budgetInput.value === '';
+      if (this.deposit) calculateBtn.disabled = !depositBank.value || !depositAmount.value || !depositPercent.value;
+    });
     titleInputs.forEach(item => {
       item.addEventListener('input', () => item.value = item.value.replace(/[^а-яё, ]/gi, ''));
     });
