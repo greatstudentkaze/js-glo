@@ -252,7 +252,7 @@ class AppData {
        depositBank.style.display = 'inline-block';
        depositAmount.style.display = 'inline-block';
        this.deposit = true;
-       depositBank.addEventListener('change', this.changePercent);
+       depositBank.addEventListener('input', this.changePercent);
        depositAmount.addEventListener('input', this.checkAmount);
        depositPercent.addEventListener('input', this.checkPercent);
        calculateBtn.disabled = true;
@@ -264,7 +264,7 @@ class AppData {
        depositAmount.value = '';
        depositPercent.value = '';
        this.deposit = false;
-       depositBank.removeEventListener('change', this.changePercent);
+       depositBank.removeEventListener('input', this.changePercent);
        depositAmount.removeEventListener('input', this.checkAmount);
        depositPercent.removeEventListener('input', this.checkPercent);
        if (budgetInput.value) calculateBtn.disabled = false;
@@ -290,7 +290,7 @@ class AppData {
     incomeAddBtn.addEventListener('click', evt => this.addIncomeExpensesBlock(evt, incomeItems));
     expenseAddBtn.addEventListener('click', evt => this.addIncomeExpensesBlock(evt, expensesItems));
     periodInput.addEventListener('input', this.watchPeriodInput);
-    depositCheck.addEventListener('change', this.depositHandler.bind(this));
+    depositCheck.addEventListener('input', this.depositHandler.bind(this));
   }
 }
 
