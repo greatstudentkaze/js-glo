@@ -282,7 +282,7 @@ class AppData {
     calculateBtn.disabled = true;
     budgetInput.addEventListener('input', () => {
       calculateBtn.disabled = budgetInput.value === '';
-      if (this.deposit) calculateBtn.disabled = !depositBank.value || !depositAmount.value || !depositPercent.value;
+      if (this.deposit) calculateBtn.disabled = !depositBank.value || !depositAmount.value || !depositPercent.value || !(depositPercent.value >= 0 && depositPercent.value <= 100);
     });
 
     calculateBtn.addEventListener('click', this.start.bind(this));
