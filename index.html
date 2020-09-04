@@ -17,8 +17,8 @@
             position: absolute;
             z-index: 2;
             top: 100px;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 40%;
+            transform: translateX(-40%);
 
             width: 130px;
             height: 118px;
@@ -26,6 +26,26 @@
 
             background-color: transparent;
             background-image: url("img/sun.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            border: none;
+
+            cursor: pointer;
+        }
+
+        .cloud {
+            position: absolute;
+            z-index: 2;
+            top: 125px;
+            left: 60%;
+            transform: translateX(-60%);
+
+            width: 144px;
+            height: 71px;
+            padding: 0;
+
+            background-color: transparent;
+            background-image: url("img/cloud.png");
             background-size: cover;
             background-repeat: no-repeat;
             border: none;
@@ -59,7 +79,8 @@
     </style>
 </head>
 <body>
-    <button class="sun" type="button" aria-label="Солнце-кнопка"></button>
+    <button class="sun" type="button" aria-label="Запустить/остановить анимацию"></button>
+    <button class="cloud" type="button" aria-label="Сбросить анимацию"></button>
     <div class="road">
         <div class="car">
             <img class="car__image" src="img/car.png" width="447" height="135" alt="car">

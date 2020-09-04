@@ -1,7 +1,8 @@
 'use strict';
 
 const car = document.querySelector('.car'),
-  sun = document.querySelector('.sun');
+  sun = document.querySelector('.sun'),
+  cloud = document.querySelector('.cloud');
 
 const animation = () => {
   stopAnimationId = requestAnimationFrame(animation);
@@ -28,4 +29,10 @@ sun.addEventListener('click', () => {
     moving = false;
     cancelAnimationFrame(stopAnimationId);
   }
+});
+
+cloud.addEventListener('click', () => {
+  cancelAnimationFrame(stopAnimationId);
+  car.style.right = '-379px';
+  moving = false;
 });
