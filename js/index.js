@@ -78,7 +78,6 @@ class AppData {
     this.showResult();
 
     this.blockInterface();
-
     this.saveData();
   }
 
@@ -252,20 +251,31 @@ class AppData {
   }
 
   changePercent() {
+    calculateBtn.disabled = true;
+
     const selectValue = this.value;
     if (selectValue === 'other') {
       depositPercent.style.display = 'inline-block';
       depositPercent.value = '';
-      depositPercent.addEventListener('change', () => {
-        const percent = depositPercent.value;
-        if (!isNumber(percent) || !(percent >= 0 && percent <= 100)) {
-          alert('Введите корректное значение в поле "Процент"!');
-          calculateBtn.disabled = true;
-        } else if (budgetInput.value) calculateBtn.disabled = false;
-      });
     } else {
       depositPercent.value = selectValue;
-      depositPercent.style.display = '';
+      depositPercent.style.cssText = '';
+      if (budgetInput.value && depositAmount.value && selectValue) calculateBtn.disabled = false;
+    }
+  }
+
+  checkAmount() {
+    calculateBtn.disabled = !(this.value && budgetInput.value && (isNumber(depositPercent.value) && (depositPercent.value >= 0 && depositPercent.value <= 100)));
+  }
+
+  checkPercent() {
+    const percent = depositPercent.value;
+    if (!isNumber(percent) || !(percent >= 0 && percent <= 100)) {
+      depositPercent.style.color = 'rgba(0, 0, 0, 0.3)';
+      calculateBtn.disabled = true;
+    } else {
+      depositPercent.style.color = '';
+      if (budgetInput.value && depositAmount.value) calculateBtn.disabled = false;
     }
   }
 
@@ -274,25 +284,37 @@ class AppData {
        depositBank.style.display = 'inline-block';
        depositAmount.style.display = 'inline-block';
        this.deposit = true;
-       depositBank.addEventListener('change', this.changePercent);
+       depositBank.addEventListener('input', this.changePercent);
+       depositAmount.addEventListener('input', this.checkAmount);
+       depositPercent.addEventListener('input', this.checkPercent);
+       calculateBtn.disabled = true;
      } else {
        depositBank.style.display = '';
        depositAmount.style.display = '';
+       depositPercent.style.cssText = '';
        depositBank.value = '';
        depositAmount.value = '';
+       depositPercent.value = '';
        this.deposit = false;
-       depositBank.removeEventListener('change', this.changePercent);
+       depositBank.removeEventListener('input', this.changePercent);
+       depositAmount.removeEventListener('input', this.checkAmount);
+       depositPercent.removeEventListener('input', this.checkPercent);
+       if (budgetInput.value) calculateBtn.disabled = false;
      }
   }
 
   addEventListeners() {
-    calculateBtn.disabled = true;
-    budgetInput.addEventListener('input', () => calculateBtn.disabled = budgetInput.value === '');
     titleInputs.forEach(item => {
       item.addEventListener('input', () => item.value = item.value.replace(/[^а-яё, ]/gi, ''));
     });
     amountInputs.forEach(item => {
-      item.addEventListener('input', () => item.value = item.value.replace(/[^0-9.]/, ''));
+      item.addEventListener('input', () => item.value = item.value.replace(/[^0-9]/, ''));
+    });
+
+    calculateBtn.disabled = true;
+    budgetInput.addEventListener('input', () => {
+      calculateBtn.disabled = budgetInput.value === '';
+      if (this.deposit) calculateBtn.disabled = !depositBank.value || !depositAmount.value || !depositPercent.value || !(depositPercent.value >= 0 && depositPercent.value <= 100);
     });
 
     calculateBtn.addEventListener('click', this.start.bind(this));
