@@ -122,20 +122,20 @@ class AppData {
   }
 
   setValues({
-                     budget = 0,
-                     budgetMonth = 0,
-                     budgetDay = 0,
-                     income = {},
-                     incomeMonth = 0,
-                     addIncome = [],
-                     expenses = {},
-                     expensesMonth = 0,
-                     addExpenses = [],
-                     deposit = false,
-                     mission = 0,
-                     depositAmount = 0,
-                     depositPercent = 0
-                   }) {
+              budget = 0,
+              budgetMonth = 0,
+              budgetDay = 0,
+              income = {},
+              incomeMonth = 0,
+              addIncome = [],
+              expenses = {},
+              expensesMonth = 0,
+              addExpenses = [],
+              deposit = false,
+              mission = 0,
+              depositAmount = 0,
+              depositPercent = 0
+  }) {
     this.budget = budget;
     this.budgetMonth = budgetMonth;
     this.budgetDay = budgetDay;
