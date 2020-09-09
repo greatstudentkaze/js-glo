@@ -64,7 +64,7 @@ const deleteCookie = name => {
 
 class AppData {
   constructor() {
-    this.setDefaultValues();
+    this.setValues({});
   }
 
   start() {
@@ -85,7 +85,7 @@ class AppData {
   reset() {
     this.deleteData();
 
-    this.setDefaultValues();
+    this.setValues({});
 
     dataInputBlock.querySelectorAll('input[type="text"]')
       .forEach(item => {
@@ -122,20 +122,86 @@ class AppData {
     resetBtn.style.display = '';
   }
 
-  setDefaultValues() {
-    this.budget = 0;
-    this.budgetMonth = 0;
-    this.budgetDay = 0;
-    this.income = {};
-    this.incomeMonth = 0;
-    this.addIncome = [];
-    this.expenses = {};
-    this.expensesMonth = 0;
-    this.addExpenses = [];
-    this.deposit = false;
-    this.mission = 0;
-    this.depositAmount = 0;
-    this.depositPercent = 0;
+  setValues({
+                     budget = 0,
+                     budgetMonth = 0,
+                     budgetDay = 0,
+                     income = {},
+                     incomeMonth = 0,
+                     addIncome = [],
+                     expenses = {},
+                     expensesMonth = 0,
+                     addExpenses = [],
+                     deposit = false,
+                     mission = 0,
+                     depositAmount = 0,
+                     depositPercent = 0
+                   }) {
+    this.budget = budget;
+    this.budgetMonth = budgetMonth;
+    this.budgetDay = budgetDay;
+    this.income = income;
+    this.incomeMonth = incomeMonth;
+    this.addIncome = addIncome;
+    this.expenses = expenses;
+    this.expensesMonth = expensesMonth;
+    this.addExpenses = addExpenses;
+    this.deposit = deposit;
+    this.mission = mission;
+    this.depositAmount = depositAmount;
+    this.depositPercent = depositPercent;
+  }
+
+  outputIncomesExpenses(type) {
+    let counter = 0,
+      items;
+
+    if (type === 'income') items = incomeItems;
+    else if (type === 'expenses') items = expensesItems;
+
+    for (const title in this[type]) {
+      if (this[type].hasOwnProperty(title)) {
+        items[counter].querySelector(`.${type}-title`).value = title;
+        items[counter].querySelector(`.${type}-amount`).value = this[type][title];
+        counter++;
+      }
+    }
+  };
+
+  outputSetValues() {
+    budgetInput.value = this.budget;
+
+    for (let i = 0; i < Object.keys(this.income).length - 1; i++) {
+      this.addIncomeExpensesBlock(incomeAddBtn, incomeItems);
+    }
+
+    this.outputIncomesExpenses('income');
+
+    this.addIncome.forEach((item, i) => {
+      addIncomeInput[i].value = item;
+    });
+
+    for (let i = 0; i < Object.keys(this.expenses).length - 1; i++) {
+      this.addIncomeExpensesBlock(expenseAddBtn, expensesItems);
+    }
+
+    this.outputIncomesExpenses('expenses');
+
+    addExpensesInput.value = this.addExpenses.join(', ');
+    depositCheck.checked = this.deposit;
+    depositBank.value = this.depositPercent;
+    depositAmount.value = this.depositAmount;
+
+    if (this.deposit) {
+      depositBank.style.display = 'inline-block';
+      depositAmount.style.display = 'inline-block';
+      if (![...depositBank.options].find(option => option.value === this.depositPercent)) {
+        depositPercent.style.display = 'inline-block';
+        depositBank.value = 'other';
+        depositPercent.value = this.depositPercent;
+      }
+    }
+    targetAmount.value = this.getTargetMonth();
   }
 
   blockInterface() {
@@ -151,8 +217,8 @@ class AppData {
     resetBtn.style.display = 'inline-block';
   }
 
-  addIncomeExpensesBlock(evt, items) {
-    const type = evt.target.classList[1].split('_')[0],
+  addIncomeExpensesBlock(target, items) {
+    const type = target.classList[1].split('_')[0],
       cloneItem = items[0].cloneNode(true);
 
     cloneItem.querySelector(`.${type}-title`).value = '';
@@ -160,8 +226,8 @@ class AppData {
     cloneItem.querySelector(`.${type}-title`).addEventListener('input', evt => evt.target.value = evt.target.value.replace(/[^а-яё, ]/gi, ''));
     cloneItem.querySelector(`.${type}-amount`).addEventListener('input', evt => evt.target.value = evt.target.value.replace(/[^0-9.]/, ''));
 
-    evt.target.before(cloneItem);
-    if (items.length >= 3) evt.target.style.display = 'none';
+    target.before(cloneItem);
+    if (items.length >= 3) target.style.display = 'none';
   }
 
   getIncomeExpenses() {
@@ -297,8 +363,8 @@ class AppData {
 
     calculateBtn.addEventListener('click', this.start.bind(this));
     resetBtn.addEventListener('click', this.reset.bind(this));
-    incomeAddBtn.addEventListener('click', evt => this.addIncomeExpensesBlock(evt, incomeItems));
-    expenseAddBtn.addEventListener('click', evt => this.addIncomeExpensesBlock(evt, expensesItems));
+    incomeAddBtn.addEventListener('click', evt => this.addIncomeExpensesBlock(evt.target, incomeItems));
+    expenseAddBtn.addEventListener('click', evt => this.addIncomeExpensesBlock(evt.target, expensesItems));
     periodInput.addEventListener('input', this.watchPeriodInput);
     depositCheck.addEventListener('change', this.depositHandler.bind(this));
   }
@@ -313,6 +379,7 @@ class AppData {
     localStorage.setItem('incomePeriod', incomePeriodOutput.value);
     localStorage.setItem('targetMonth', targetMonthOutput.value);
     localStorage.setItem('periodInput', periodInput.value);
+    localStorage.setItem('enteredData', JSON.stringify(this));
 
     setCookie('isLoad', true,{'max-age': 2592e6});
     setCookie('budgetMonth', budgetMonthInput.value,{'max-age': 2592e6});
@@ -323,6 +390,7 @@ class AppData {
     setCookie('incomePeriod', incomePeriodOutput.value,{'max-age': 2592e6});
     setCookie('targetMonth', targetMonthOutput.value,{'max-age': 2592e6});
     setCookie('periodInput', periodInput.value,{'max-age': 2592e6});
+    setCookie('enteredData', JSON.stringify(this),{'max-age': 2592e6});
   }
 
   compareData() {
@@ -336,6 +404,10 @@ class AppData {
   }
 
   getData() {
+    const enteredData = JSON.parse(localStorage.getItem('enteredData'));
+    this.setValues(enteredData);
+    this.outputSetValues();
+
     budgetMonthInput.value = localStorage.getItem('budgetMonth');
     budgetDayInput.value = localStorage.getItem('budgetDay');
     expensesMonthOutput.value = localStorage.getItem('expensesMonth');
@@ -372,5 +444,3 @@ appData.compareData();
 if (localStorage.getItem('isLoad')) appData.getData();
 
 appData.addEventListeners();
-
-// console.log(appData.targetMonth > 0 ? 'Цель будет достигнута за: ' + appData.targetMonth + ' мес.' : 'Цель не будет достигнута');
