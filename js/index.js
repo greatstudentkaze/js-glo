@@ -131,13 +131,13 @@ class AppData {
       if (itemTitle && itemAmount) {
         this[type][itemTitle.toLowerCase()] = +itemAmount;
       }
-
-      if (type === 'income') {
-        for (const income in this.income) {
-          this.incomeMonth += this.income[income];
-        }
-      }
     });
+
+    if (type === 'income') {
+      for (let income in this.income) {
+        this.incomeMonth += this.income[income];
+      }
+    }
   }
 
   getAddIncomeExpenses(inputs, type) {
