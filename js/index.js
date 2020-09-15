@@ -48,10 +48,12 @@ class AppData {
   start() {
     this.budget = +budgetInput.value;
 
-    this.getIncomeExpenses();
+    this.getIncomeExpenses(incomeItems, 'income');
+    this.getIncomeExpenses(expensesItems, 'expenses');
     this.getExpensesMonth();
     this.getBudget();
-    this.getAddIncomeExpenses();
+    this.getAddIncomeExpenses(addIncomeInput, 'addIncome');
+    this.getAddIncomeExpenses(addExpensesInput, 'addExpenses');
     this.showResult();
 
     dataInputBlock.querySelectorAll('input[type="text"]')
@@ -121,35 +123,29 @@ class AppData {
     if (items.length >= 3) evt.target.style.display = 'none';
   }
 
-  getIncomeExpenses() {
-    const count = item => {
-      const type = item.className.split('-')[0],
-        itemTitle = item.querySelector(`.${type}-title`).value.trim(),
+  getIncomeExpenses(items, type) {
+    [...items].forEach(item => {
+      const itemTitle = item.querySelector(`.${type}-title`).value.trim(),
         itemAmount = item.querySelector(`.${type}-amount`).value;
 
-      if (itemTitle !== '' && itemAmount !== '') {
+      if (itemTitle && itemAmount) {
         this[type][itemTitle.toLowerCase()] = +itemAmount;
       }
-    };
 
-    [...incomeItems].forEach(count);
-    for (let income in this.income) {
-      this.incomeMonth += this.income[income];
-    }
-
-    [...expensesItems].forEach(count);
+      if (type === 'income') {
+        for (const income in this.income) {
+          this.incomeMonth += this.income[income];
+        }
+      }
+    });
   }
 
-  getAddIncomeExpenses() {
-    const collect = (item, isIncome = false) => {
-      item = item.trim().toLowerCase();
-      if (item !== '') {
-        isIncome ?  this.addIncome.push(item) :  this.addExpenses.push(item);
-      }
-    }
-
-    addIncomeInput.forEach(item => collect(item.value, true))
-    addExpensesInput.value.split(', ').forEach(item => collect(item));
+  getAddIncomeExpenses(inputs, type) {
+    const addItems = type === 'addExpenses' ? inputs.value.split(', ') : inputs;
+    addItems.forEach(item => {
+      item = type === 'addIncome' ? item.value.trim() : item.trim();
+      if (item) this[type].push(item.toLowerCase());
+    })
   }
 
   showResult() {
@@ -232,8 +228,3 @@ class AppData {
 const appData = new AppData();
 
 appData.addEventListeners();
-
-// console.log(appData.targetMonth > 0 ? 'Цель будет достигнута за: ' + appData.targetMonth + ' мес.' : 'Цель не будет достигнута');
-
-
-
