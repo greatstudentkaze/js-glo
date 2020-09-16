@@ -286,18 +286,6 @@ class AppData {
     return Math.ceil(targetAmount.value / this.budgetMonth);
   }
 
-  getStatusIncome() {
-    if (this.budgetDay >= 1200) {
-      return ('У Вас высокий уровень дохода!');
-    } else if (this.budgetDay >= 600) {
-      return ('У Вас средний уровень дохода.');
-    } else if (this.budgetDay >= 0) {
-      return ('К сожалению, у Вас уровень дохода ниже среднего :(');
-    } else {
-      return ('Что-то пошло не так О_о');
-    }
-  }
-
   calcSavedMoney() {
     return this.budgetMonth * periodInput.value;
   }
