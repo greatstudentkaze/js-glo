@@ -2,14 +2,8 @@
 
 const employers = ['АртеМ', 'максим', 'Владимир', 'сергей', 'НикиТа', 'евГений', ' Дарья', ' ', 'виктория ', 'ЕкаТерина', '', ' Андрей ', 'КИРИЛЛ'];
 const nameCourse = 'Базовый React';
-let command = employers.filter(employer => employer.trim());
-
-command = command.map(item => {
-	item = item.toLowerCase().trim();
-	item = item[0].toUpperCase() + item.slice(1);
-
-	return item;
-});
+const command = employers.filter(employer => employer.trim())
+	.map(name => name.trim().charAt(0).toUpperCase() + name.trim().slice(1).toLowerCase());
 
 const data = {
 	cash: [3, 8, 3],
@@ -17,23 +11,19 @@ const data = {
 	add: ['styled-components', 'firebase']
 };
 
-const calcCash = (own = 0, ...args) => {
-	const everyCash = args[0];
+const { cash, react, react: [first], add } = data;
 
-	return everyCash.reduce((total, item) => total + item, own);
-}
+const calcCash = everyCash => everyCash.reduce((total, item) => total + item, 0);
 
-const { cash, react, add } = data;
+const lesson = calcCash(cash);
 
-const lesson = calcCash(null, cash);
-
-const makeBusiness = (director, teacher = 'Максим', allModule, gang, course) => {
+const makeBusiness = (director, allModule, gang, course, teacher = 'Максим') => {
 	const sumTech = [...react, ...add, 'и другие'];
 
 	console.log(`Стартуем новый курс: ${course}. Владелец: ${director}, преподаватель: ${teacher}. Всего уроков: ${allModule}. \nКоманда Академии: ${gang}`);
-	console.log(`Первое что изучим будет ${react[0]}. Он очень похож на HTML!`);
+	console.log(`Первое что изучим будет ${first}. Он очень похож на HTML!`);
 	console.log('Технологии которые мы изучим:');
 	console.log(...sumTech);
 }
 
-makeBusiness(...['Артем', null, lesson, command, nameCourse]);
+makeBusiness('Артем', lesson, command, nameCourse);
